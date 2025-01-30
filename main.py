@@ -24,27 +24,45 @@ app.add_middleware(
 class Person(BaseModel):
     fname: str
     lname: str
+    dept: int
+class Personstore(BaseModel):
+    fname: str
+    lname: str
     dept: str
-
 class PersonResponse(Person):
     id: int
 
 # GET all persons
-@app.get("/", response_model=List[PersonResponse])
+@app.get("/", response_model=List[Person])
 def get_all_persons(db: Session = Depends(get_db)):
     return db.query(PersonDB).all()
 
+# Logic to change string in to numnber
+def convert_to_number(name: str) -> int:
+    if name.lower() == "tech":
+        return 1
+    else:
+        return 2
+
+
 # POST add a person
-@app.post("/addperson", response_model=PersonResponse)
-def add_person(person: Person, db: Session = Depends(get_db)):
-    new_person = PersonDB(**person.dict())  # Cleaner approach
+@app.post("/addperson", response_model=Person)
+def add_person(person: Personstore, db: Session = Depends(get_db)):
+    transform_dept = convert_to_number(person.dept)
+
+    new_person = PersonDB(
+        fname=person.fname,
+        lname=person.lname,
+        dept=transform_dept
+    )
+    print(PersonDB)
     db.add(new_person)
     db.commit()
     db.refresh(new_person)
     return new_person
 
 # DELETE a person
-@app.delete("/deleteperson/{person_id}", response_model=PersonResponse)
+@app.delete("/deleteperson/{person_id}", response_model=Person)
 def delete_person(person_id: int, db: Session = Depends(get_db)):
     find_person = db.query(PersonDB).filter(PersonDB.id == person_id).first()
     if not find_person:

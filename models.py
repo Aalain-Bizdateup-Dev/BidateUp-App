@@ -8,6 +8,6 @@ class Person(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     fname = Column(String, nullable=False)
     lname = Column(String, nullable=False)
-    dept = Column(String, nullable=False)
+    dept = Column(Integer, nullable=False)
     class Config:
         orm_mode = True
