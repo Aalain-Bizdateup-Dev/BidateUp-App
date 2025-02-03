@@ -1,0 +1,8 @@
+Fields for Form
+1. Batch ID 
+2. Name
+3. Email
+4. Department
+5. phone
+6. Contact Detail
+7. Sheet = (Monthly, Yearly, Quaterly)

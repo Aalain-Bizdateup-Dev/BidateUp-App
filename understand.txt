@@ -1,0 +1,43 @@
+How to Connect Two Tables in PostgreSQL (Simple Explanation)
+In PostgreSQL, connecting two tables is done using Foreign Keys.
+
+This helps in linking data between tables.
+
+CREATE TABLE departments (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    department_id INT REFERENCES departments(id)  -- Foreign Key
+);
+
+3. What Happens Here?
+departments.id is the Primary Key (each department has a unique ID).
+employees.department_id is a Foreign Key that connects employees to their department.
+REFERENCES departments(id) means each employee must belong to a department.
+
+
+class Department(Base):
+    __tablename__ = "departments"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+
+class Employee(Base):
+    __tablename__ = "employees"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    department_id = Column(Integer, ForeignKey("departments.id"))
+    department = relationship("Department", back_populates="employees")
+
+class Question(Base):
+    __tablename__ = "questions"
+    id = Column(Integer, primary_key=True, index=True) 
+    department_id = Column(Integer, ForeignKey("departments.id"))
+    question = Column(Text)
+    answer = Column(Text)
+    department = relationship("Department", back_populates="questions")
