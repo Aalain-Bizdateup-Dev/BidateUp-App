@@ -41,3 +41,35 @@ class Question(Base):
     question = Column(Text)
     answer = Column(Text)
     department = relationship("Department", back_populates="questions")
+
+# class QuestionAnswer(Base):
+#     __tablename__ = "questions_answers"
+#     id = Column(Integer, primary_key=True, index=True)
+#     question = Column(Text, nullable=False)
+#     answer = Column(Text, nullable=False)
+#     department_id = Column(Integer, ForeignKey("departments.id"))
+#     department = relationship("Department", back_populates="questions")
+# @app.post("/upload-csv/")
+# async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
+#     contents = await file.read()
+#     df = pd.read_csv(io.StringIO(contents.decode("utf-8")))
+
+#     if "Questions" not in df.columns or "ans" not in df.columns:
+#         return {"error": "CSV must contain 'question' and 'answer' columns"}
+
+#     for _, row in df.iterrows():
+#         qa_entry = QuestionAnswer(question=row["Questions"], answer=row["ans"])
+#         db.add(qa_entry)
+
+#     db.commit()
+#     return {"message": "CSV uploaded and questions stored successfully"}
+
+
+
+
+
+
+
+
+
+

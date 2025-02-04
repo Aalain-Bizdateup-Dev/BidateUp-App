@@ -1,0 +1,44 @@
+.btn-biz{
+    background-color: #2F3067;
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 20px;border-radius: 10px;
+    width: 150px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.back-nav {
+    background-color: #FBFBFB;
+}
+.btn-biz:hover{
+    background-color: #2f3067a4;
+    transition: 0.2s linear;
+}
+.custom-font{
+    font-size: 25px;
+}
+.custom-input{
+    border: none;
+    outline: none;
+    background-color: #EEEEEE;
+    border-radius: 10px;
+    padding: 10px 50px;
+}
+.absolute-icon{
+    top: 22px;
+    left: 25px;
+}
+.category_cards{
+    background-color: #8190DA;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 10px 20px ;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 22px;
+}
+.footer{
+    background-color: #FBFBFB;
+    padding: 10px;
+}
