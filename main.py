@@ -50,6 +50,7 @@ class Question(Base):
     id = Column(Integer, primary_key=True, index=True)
     question = Column(Text, nullable=False)
     answer = Column(Text, nullable=False)
+    month = Column(Text, nullable=False)
     department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
     department = relationship("Department", back_populates="questions")
 
@@ -108,26 +109,6 @@ def add_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
-# API to Add a Question
-@app.post("/add_question/")
-def add_question(question: QuestionCreate, db: Session = Depends(get_db)):
-    dept = db.query(Department).filter(Department.name == question.department).first()
-    if not dept:
-        dept = Department(name=question.department)
-        db.add(dept)
-        db.commit()
-        db.refresh(dept)
-
-    new_question = Question(
-        question=question.question, 
-        answer=question.answer, 
-        department_id=dept.id
-    )
-    db.add(new_question)
-    db.commit()
-    db.refresh(new_question)
-
-    return {"message": "Question added successfully", "question_id": new_question.id}
 
 # API to Get All Questions for a Department
 @app.get("/get_questions/{department_name}")
@@ -152,8 +133,8 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
         df = pd.read_csv(io.StringIO(contents.decode("utf-8")))
 
         # Ensure correct CSV format
-        if "question" not in df.columns or "answer" not in df.columns or "department" not in df.columns:
-            return {"error": "CSV must contain 'question', 'answer', and 'department' columns"}
+        if "question" not in df.columns or "month" not in df.columns or "answer" not in df.columns or "department" not in df.columns:
+            return {"error": "CSV must contain 'question', 'answer', and 'department', month columns"}
 
         for _, row in df.iterrows():
             # Ensure department exists
@@ -168,6 +149,7 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
             qa_entry = Question(
                 question=row["question"], 
                 answer=row["answer"], 
+                month=row["month"], 
                 department_id=dept.id
             )
             db.add(qa_entry)
@@ -178,3 +160,14 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+
+
+@app.get("/get_data_from_sheet/{dept}/{month}")
+def get_data(dept: str, month: str, db: Session = Depends(get_db)):
+    try:
+        data = db.query(Question).filter(Question.department.has(Department.name == dept), Question.month == month).all()
+      
+        return data
+    except Exception as e:
+        print(f"Error: {e}")
+        return {"error": str(e)}

@@ -65,11 +65,31 @@ class Question(Base):
 #     return {"message": "CSV uploaded and questions stored successfully"}
 
 
+def add_question(question: QuestionCreate, db: Session = Depends(get_db)):
+    dept = db.query(Department).filter(Department.name == question.department).first()
+    if not dept:
+        dept = Department(name=question.department)
+        db.add(dept)
+        db.commit()
+        db.refresh(dept)
+
+    new_question = Question(
+        question=question.question, 
+        answer=question.answer, 
+        department_id=dept.id
+    )
+    db.add(new_question)    
+    db.commit()
+    db.refresh(new_question)
+
+    return {"message": "Question added successfully", "question_id": new_question.id}
 
 
 
 
-
-
+class QuestionCreate(BaseModel):
+    question: str
+    answer: str
+    department: str
 
 
