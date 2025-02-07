@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
-// react-bootstrap
 import { Card, Row, Col } from 'react-bootstrap';
-
-// -----------------------|| PRODUCT CARD ||-----------------------//
-
+import "../../../../src/index.css"
 export default function ProductCard({ params }) {
   let cardClass = ['prod-p-card'];
   let iconClass = 'text-primary';
@@ -20,18 +17,18 @@ export default function ProductCard({ params }) {
   }
 
   return (
-    <Card className={cardClass.join(' ')}>
+    <Card className={`${params.bg_card_color} card-shadow` }>
       <Card.Body>
-        <Row className={rowClass.join(' ')}>
+        <Row >
           <Col>
-            <h6 className={`m-b-5 ${textClass}`}>{params.title}</h6>
-            <h3 className={`mb-0 ${textClass}`}>{params.primaryText}</h3>
+            <h4 className={`m-b-5  ${params.text_color} `}>{params.title}</h4 >
+            <h3 className={`mb-0 ${params.text_color}`}>{params.primaryText}</h3>
           </Col>
           <Col sm="auto">
-            <i className={`material-icons-two-tone ${iconClass}`}>{params.icon}</i>
+            <i className={`material-icons-two-tone ${params.icon_color}`}>{params.icon}</i>
           </Col>
         </Row>
-        <p className={`mb-0 ${textClass}`}>{params.secondaryText}</p>
+        {/* <p className={`mb-0 ${}`}>{params.secondaryText}</p> */}
       </Card.Body>
     </Card>
   );

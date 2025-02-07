@@ -144,7 +144,7 @@ export default function DashSales() {
       </Col>
       <Col md={12} xl={6}>
         <Row>
-          <Col sm={6}>
+          <Col sm={12}>
             <ProductCard params={{ title: 'Total Profit', primaryText: '$1,783', icon: 'card_giftcard' }} />
           </Col>
           <Col sm={6}>

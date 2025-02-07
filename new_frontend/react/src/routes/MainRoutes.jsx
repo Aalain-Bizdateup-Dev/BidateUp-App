@@ -17,6 +17,9 @@ const Register = lazy(() => import('../views/auth/register'));
 
 const Sample = lazy(() => import('../views/sample'));
 
+const Profile = lazy(() => import('../views/profile/profile'));
+const Employee = lazy(() => import('../views/Employee/Employee'));
+
 const MainRoutes = {
   path: '/',
   children: [
@@ -31,6 +34,14 @@ const MainRoutes = {
         {
           path: '/typography',
           element: <Typography />
+        },
+        {
+          path: '/profile',
+          element: <Profile />
+        },
+        {
+          path: '/employee',
+          element: <Employee />
         },
         {
           path: '/color',

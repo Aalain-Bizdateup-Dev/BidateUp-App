@@ -35,7 +35,7 @@ export default function ProductTable({ wrapclass, title, height, tableheading, r
                       <label className={`badge badge-${y.status.badge}`}>{y.status.label}</label>
                     </div>
                   </td>
-                  <td>{y.price}</td>
+                  <td> This {y.price}</td>
                   <td>
                     {y.action.map((z, k) => (
                       <Link to={z.link} key={k}>

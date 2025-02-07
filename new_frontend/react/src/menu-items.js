@@ -48,6 +48,14 @@ const menuItems = {
           url: '/color'
         },
         {
+          id: 'color',
+          title: 'Profile',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'color_lens',
+          url: '/profile'
+        },
+        {
           id: 'icons',
           title: 'Icons',
           type: 'collapse',
@@ -103,6 +111,9 @@ const menuItems = {
         }
       ]
     },
+
+
+
     {
       id: 'support',
       title: 'OTHER',

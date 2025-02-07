@@ -1,0 +1,50 @@
+.card-shadow {
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+.card-shadow:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    scale: 1.01;
+}
+.text-head{
+    color: #161515;
+    font-size: 18px;
+}
+.border-radius{
+    /* border-radius: 10px; */
+    /* border: 1px solid #000; */
+}
+.custom-text{
+    font-size: 20px;
+}
+.custom-table-btn{
+    border: none;
+    outline: none;
+    transition: 0.2s linear;
+    font-size: 18px;
+}
+.custom-table-btn:hover{
+    background-color: #444343;
+    color: #fff;
+}
+.border-none{
+    border: none;
+}
+.outline-none{
+    outline: none;
+}
+.employe-input-border{
+    border-radius: 10px;
+}
+.input-padding{
+    padding: 10px 35px;
+}
+.position-type{
+    top: 14px;
+    left: 9px;
+}
+.box-shdow-back{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 10px;
+}
