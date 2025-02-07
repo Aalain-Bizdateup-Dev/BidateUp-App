@@ -1,7 +1,9 @@
 .card-shadow {
     transition: all 0.3s ease-in-out; /* Smooth transition */
 }
-
+*{
+    font-family: "Poppins", serif;
+}
 .card-shadow:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     cursor: pointer;
@@ -50,4 +52,22 @@
 }
 .cursor-pointer{
     cursor: pointer;
+}
+.custom-width-modal{
+    width: 800px!important;
+}
+.custom-main-modal{
+    /* width */
+}
+.submit-btn{
+    outline: none;
+    font-size: 25px!important;
+    font-weight: 600;
+    transition: 0.2s linear;
+}
+.submit-btn:hover{
+    background-color: #444343;
+    color: #fff;
+    transition: 0.2s linear;
+
 }

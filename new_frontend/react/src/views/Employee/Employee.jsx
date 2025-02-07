@@ -1,28 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProductTable from '../../components/Widgets/ProductTable'
 import productData from 'data/productTableData';
 import "../../../src/index.css"
 import { ToastContainer, toast } from 'react-toastify';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.min';
+import EmployeeModal from './modal';
+
 const Employee = () => {
   const notify = () => toast("Wow so easy!");
+
+  const [batchId, setBatchId] = useState(null);
+
   const alldata = [
     { id:1,
+
       name:"Aalain",
       Dept:"Tech",
       mobile:1234,
       email:"a@gmail.com",
       role:"Web Developer"
     },
-    { id:1,
-      name:"Aalain",
+    { id:4165165161,
+      name:"asfdasd",
       Dept:"Tech",
       mobile:1234,
       email:"a@gmail.com",
       role:"Web Developer"
     },
-    { id:1,
+    { id:1541603289616,
       name:"Aalain",
       Dept:"Tech",
       mobile:1234,
@@ -30,6 +35,27 @@ const Employee = () => {
       role:"Web Developer"
     }
   ]
+
+// Handle Delete Function
+const handleDelete = (id) => {
+ if(( confirm("Are You Sure You Want To Delete This Employee"))){
+  console.log(id);
+  // setItems(items.filter(item => item !== id));
+  toast.success("Employee Deleted Successfully!");
+ }
+ else{
+  toast.error("Employee Not Deleted!");
+ }
+};
+
+const handleEdit = (id) => {
+  setBatchId(id); 
+  console.log(batchId);
+  
+};
+const closeModal = () => {
+  setshowmodal(false)
+}
   return (
     <>
   <div className="p-4 bg-gray-100 box-shdow-back
@@ -40,30 +66,6 @@ const Employee = () => {
         <button onClick={notify}>Notify!</button>
         <ToastContainer />
       </div>
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<div className="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 
   <h3>BizDateUp  Employees </h3>
   <div className='d-flex justify-content-between mb-4 align-items-center'>
@@ -92,6 +94,7 @@ const Employee = () => {
     </tr>
   </thead>
   <tbody>
+
     {alldata.map((item, index) => (
       <tr key={index} className="hover:bg-gray-100 ">
         <td className="px-4 py-3 custom-text">{item.id}</td>
@@ -101,8 +104,10 @@ const Employee = () => {
         <td className="px-4 py-3 custom-text">{item.email}</td>
         <td className="px-4 py-3 custom-text">{item.role}</td>
         <td className="px-4 py-2 custom-text flex gap-2">
-          <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => handleEdit(item.id)}>Edit</button>
-          <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn">Delete</button>
+          <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn"  onClick={() => handleEdit(item.id)} data-bs-toggle="modal"
+        data-bs-target="#exampleModal">Edit</button>
+          {batchId && <EmployeeModal batchid={batchId}  />}
+          <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn" onClick={()=>handleDelete(item.id)}>Delete</button>
         </td>
       </tr>
     ))}
