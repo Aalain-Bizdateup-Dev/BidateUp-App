@@ -26,7 +26,7 @@ const menuItems = {
     },
     {
       id: 'ui-element',
-      title: 'ELEMENTS',
+      title: '',
       subtitle: 'UI Components',
       type: 'group',
       icon: 'icon-ui',
@@ -38,6 +38,14 @@ const menuItems = {
           icon: 'material-icons-two-tone',
           iconname: 'text_fields',
           url: '/typography'
+        },
+        {
+          id: 'employee',
+          title: 'Employees',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'text_fields',
+          url: '/employee'
         },
         {
           id: 'color',
@@ -85,8 +93,8 @@ const menuItems = {
       ]
     },
     {
-      id: 'pages',
-      title: 'Pages',
+      id: '',
+      title: '',
       subtitle: '15+ Redymade Pages',
       type: 'group',
       icon: 'icon-pages',
@@ -107,6 +115,15 @@ const menuItems = {
           icon: 'material-icons-two-tone',
           iconname: 'person_add_alt_1',
           url: '/register',
+          target: true
+        },
+        {
+          id: 'Employee',
+          title: 'Employee',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'person_add_alt_1',
+          url: '/employee',
           target: true
         }
       ]

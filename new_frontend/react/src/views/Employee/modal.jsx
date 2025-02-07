@@ -1,8 +1,70 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import "../../../src/index.css"
-const EmployeeModal = ({ batchid }) => {
+import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+
+const EmployeeModal = ({ batchid, onClose }) => {
+  // State to store the form data and errors
+
+const [modal, setmodal] = useState(false)
+
+  const [formData, setFormData] = useState({
+    name: '',
+    dept: '',
+    email: '',
+    mobile: '',
+    role: ''
+  });
+
+  const [errors, setErrors] = useState({
+    name: '',
+    dept: '',
+    email: '',
+    mobile: '',
+    role: ''
+  });
+
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Basic form validation
+  const validateForm = () => {
+    let formErrors = {};
+
+    if (!formData.name) formErrors.name = 'Employee Name is required';
+    if (!formData.dept) formErrors.dept = 'Department is required';
+    if (!formData.email) formErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) formErrors.email = 'Email is invalid';
+    if (!formData.mobile) formErrors.mobile = 'Mobile is required';
+    else if (!/^[0-9]{10}$/.test(formData.mobile)) formErrors.mobile = 'Mobile number should be 10 digits';
+    if (!formData.role) formErrors.role = 'Role is required';
+
+    setErrors(formErrors);
+
+    // Return true if there are no errors
+    return Object.keys(formErrors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+    setmodal(false);
+
+      console.log('Form data submitted:', formData);
+     formData.name = '';
+      formData.dept = '';
+      formData.email = '';
+      formData.mobile = '';
+      formData.role = '';
+    toast.success("Employee Updated Successfully")
+    }
+  };
+
   return (
     <div
       className="modal fade custom-main-modal"
@@ -16,25 +78,105 @@ const EmployeeModal = ({ batchid }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Employee ID {batchid} and Name is 
+                Employee ID {batchid}
               </h1>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={onClose}
               ></button>
             </div>
-           
-            <div className="modal-footer ">
-              <button type="button" className=" border-none submit-btn bg-green-500 w-100">
-                Submit
-              </button>
-            </div>
+
+            <form onSubmit={handleSubmit}>
+              <div className="modal-body">
+                {/* Employee Name Field */}
+                <div className="mb-3">
+                  <label htmlFor="name" className="form-label">Employee Name</label>
+                  <input
+                    name="name"
+                    type="text"
+                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+                  {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                </div>
+
+                {/* Department Field */}
+                <div className="mb-3">
+                  <label htmlFor="dept" className="form-label">Department</label>
+                  <input
+                    name="dept"
+                    type="text"
+                    className={`form-control ${errors.dept ? 'is-invalid' : ''}`}
+                    value={formData.dept}
+                    onChange={handleChange}
+                  />
+                  {errors.dept && <div className="invalid-feedback">{errors.dept}</div>}
+                </div>
+
+                {/* Email Field */}
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                </div>
+
+                {/* Mobile Field */}
+                <div className="mb-3">
+                  <label htmlFor="mobile" className="form-label">Mobile</label>
+                  <input
+                    name="mobile"
+                    type="text"
+                    className={`form-control ${errors.mobile ? 'is-invalid' : ''}`}
+                    value={formData.mobile}
+                    onChange={handleChange}
+                  />
+                  {errors.mobile && <div className="invalid-feedback">{errors.mobile}</div>}
+                </div>
+
+                {/* Role Field */}
+                <div className="mb-3">
+                  <label htmlFor="role" className="form-label">Role</label>
+                  <input
+                    name="role"
+                    type="text"
+                    className={`form-control ${errors.role ? 'is-invalid' : ''}`}
+                    value={formData.role}
+                    onChange={handleChange}
+                  />
+                  {errors.role && <div className="invalid-feedback">{errors.role}</div>}
+                </div>
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  onClick={onClose}
+                >
+                  Close
+                </button>
+                <button type="submit " 
+                disabled = {modal}
+                className="btn btn-primary">Save changes</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
+    
   );
 };
 

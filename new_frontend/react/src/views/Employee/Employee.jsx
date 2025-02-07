@@ -40,7 +40,6 @@ const Employee = () => {
 const handleDelete = (id) => {
  if(( confirm("Are You Sure You Want To Delete This Employee"))){
   console.log(id);
-  // setItems(items.filter(item => item !== id));
   toast.success("Employee Deleted Successfully!");
  }
  else{
@@ -60,10 +59,7 @@ const closeModal = () => {
     <>
   <div className="p-4 bg-gray-100 box-shdow-back
 ">
-
-
 <div>
-        <button onClick={notify}>Notify!</button>
         <ToastContainer />
       </div>
 
@@ -104,9 +100,10 @@ const closeModal = () => {
         <td className="px-4 py-3 custom-text">{item.email}</td>
         <td className="px-4 py-3 custom-text">{item.role}</td>
         <td className="px-4 py-2 custom-text flex gap-2">
+          
           <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn"  onClick={() => handleEdit(item.id)} data-bs-toggle="modal"
         data-bs-target="#exampleModal">Edit</button>
-          {batchId && <EmployeeModal batchid={batchId}  />}
+         <EmployeeModal batchid={batchId}  />
           <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn" onClick={()=>handleDelete(item.id)}>Delete</button>
         </td>
       </tr>
