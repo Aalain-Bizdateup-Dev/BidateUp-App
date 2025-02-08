@@ -71,3 +71,20 @@
     transition: 0.2s linear;
 
 }
+.add_Employee_input{
+    background-color: #ffffff;
+    outline: none;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+.add_employee_label
+{
+    font-size: 18px;
+}
+.color-red{
+    color: red;
+}
+.err-font{
+    font-size: 16px;
+}

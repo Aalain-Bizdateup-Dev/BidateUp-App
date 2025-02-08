@@ -48,6 +48,14 @@ const menuItems = {
           url: '/employee'
         },
         {
+          id: 'add_employee',
+          title: 'Add Employee',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'text_fields',
+          url: '/add-employee'
+        },
+        {
           id: 'color',
           title: 'Color',
           type: 'item',

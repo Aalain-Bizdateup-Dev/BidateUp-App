@@ -2,6 +2,7 @@ import { lazy } from 'react';
 
 import AdminLayout from 'layouts/AdminLayout';
 import GuestLayout from 'layouts/GuestLayout';
+import Add__Employee from '../views/Add_Employee/Add__Employee';
 
 const DashboardSales = lazy(() => import('../views/dashboard/DashSales/index'));
 
@@ -19,7 +20,7 @@ const Sample = lazy(() => import('../views/sample'));
 
 const Profile = lazy(() => import('../views/profile/profile'));
 const Employee = lazy(() => import('../views/Employee/Employee'));
-
+const AddEmployee = (() => import('../views/Add_Employee/Add__Employee'));
 const MainRoutes = {
   path: '/',
   children: [
@@ -42,6 +43,10 @@ const MainRoutes = {
         {
           path: '/employee',
           element: <Employee />
+        },
+        {
+          path: '/add-employee',
+          element: <Add__Employee />
         },
         {
           path: '/color',
