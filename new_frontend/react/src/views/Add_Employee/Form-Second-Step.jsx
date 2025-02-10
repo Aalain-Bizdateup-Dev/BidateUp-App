@@ -289,7 +289,7 @@ const Second_Step = () => {
           />
           {formik.errors.yearly_file ? <div>{formik.errors.yearly_file}</div> : null}    
             </div>
-
+Tets
          </div>
          <div className='d-flex justify-content-between'>
           <p>Test</p>
