@@ -10,13 +10,16 @@ const Step_One = () => {
     if (!values.name) {
       errors.name = 'Name Is Required';
     }
-
+    if (!values.role) {
+      errors.role = 'Role Is Required';
+    }
+    if (!values.number) {
+      errors.number = 'Number Is Required';
+    }
     if (!values.email) {
       errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = 'Invalid email address';
-    }
-
+    } 
+ 
     return errors;
   };
 
@@ -24,7 +27,9 @@ const Step_One = () => {
     initialValues: {
       batchid: '',
       name: '',
-      email: ''
+      email: '',
+      number:"",
+      role:""
     },
     validate,
     onSubmit: (values) => {
@@ -55,6 +60,7 @@ const Step_One = () => {
             Enter Name <span className="color-red">*</span>
           </label>
           <input
+          id = "name"
             name="name"
             type="text"
             onChange={formik.handleChange}
@@ -67,21 +73,21 @@ const Step_One = () => {
       </div>
       <div className="row mt-4">
         <div className="col-6 d-flex flex-column">
-          <label htmlFor="batchid" className="mb-2 add_employee_label">
+          <label htmlFor="email" className="mb-2 add_employee_label">
           Enter Email Id <span className="color-red">*</span>
           </label>
           <input
-            name="batchid"
+            name="email"
             type="email"
             onChange={formik.handleChange}
-            value={formik.values.batchid}
+            value={formik.values.email}
             className="add_Employee_input"
             placeholder="Enter Email Id .."
           />
-          {formik.errors.batchid ? <div className='color-red fw-semibold err-font'>{formik.errors.batchid}</div> : null}
+          {formik.errors.email ? <div className='color-red fw-semibold err-font'>{formik.errors.email}</div> : null}
         </div>
         
-        <div className="col-6 d-flex flex-column">
+        {/* <div className="col-6 d-flex flex-column">
           <label htmlFor="name" className="mb-2 add_employee_label">
           Select Department    <span className="color-red">*</span>
           </label>
@@ -101,22 +107,22 @@ const Step_One = () => {
           </select>
          
           {formik.errors.name ? <div className='color-red fw-semibold err-font'>{formik.errors.name}</div> : null}
-        </div>
+        </div> */}
       </div>
       <div className="row mt-4">
         <div className="col-6 d-flex flex-column">
-          <label htmlFor="batchid" className="mb-2 add_employee_label">
+          <label htmlFor="role" className="mb-2 add_employee_label">
           Enter Role <span className="color-red">*</span>
           </label>
           <input
-            name="batchid"
-            type="email"
+            name="role"
+            type="text"
             onChange={formik.handleChange}
-            value={formik.values.batchid}
+            value={formik.values.role}
             className="add_Employee_input"
             placeholder="Enter Email Id .."
           />
-          {formik.errors.batchid ? <div className='color-red fw-semibold err-font'>{formik.errors.batchid}</div> : null}
+          {formik.errors.role ? <div className='color-red fw-semibold err-font'>{formik.errors.role}</div> : null}
         </div>
         
         <div className="col-6 d-flex flex-column">
@@ -124,15 +130,15 @@ const Step_One = () => {
           Enter Phone Number    <span className="color-red">*</span>
           </label>
           <input
-            name="name"
-            type="text"
+            name="number"
+            type="number"
             onChange={formik.handleChange}
-            value={formik.values.name}
+            value={formik.values.number}
             className="add_Employee_input"
             placeholder="Select Department  ..."
           />
          
-          {formik.errors.name ? <div className='color-red fw-semibold err-font'>{formik.errors.name}</div> : null}
+          {formik.errors.number ? <div className='color-red fw-semibold err-font'>{formik.errors.number}</div> : null}
         </div>
       </div>
     <div className="row justify-content-end">
