@@ -41,19 +41,19 @@ const Second_Step = () => {
             errors.dec_file = 'Required Dec File';
           } 
           if (!values.jan_mar_file) {
-            errors.jan_mar_file = 'Required Jan File';
+            errors.jan_mar_file = 'Required Jan - Mar File';
           } 
           if (!values.july_sept_file) {
-            errors.july_sept_file = 'Required Jan File';
+            errors.july_sept_file = 'Required July - Sept File';
           } 
           if (!values.april_june_file) {
-            errors.april_june_file = 'Required Jan File';
+            errors.april_june_file = 'Required April - June File';
           } 
           if (!values.oct_dec_file) {
-            errors.oct_dec_file = 'Required Jan File';
+            errors.oct_dec_file = 'Required Oct - Dec File';
           } 
           if (!values.yearly_file) {
-            errors.yearly_file = 'Required Jan File';
+            errors.yearly_file = 'Required Yearly File';
           } 
         return errors;
       };    
@@ -84,6 +84,7 @@ const Second_Step = () => {
       });
       return (
         <form onSubmit={formik.handleSubmit}>
+          <h3>Monthly KPI:</h3>
          <div className="row">
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload Jan Kpi</label>
@@ -107,28 +108,200 @@ const Second_Step = () => {
             </div>
 
          </div>
-    
-          <label htmlFor="lastName">Last Name</label>
+         <div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label  className="mb-2 add_employee_label">Upload Feb Kpi</label>
           <input
-            id="lastName"
-            name="lastName"
-            type="text"
+            name="jan_file"
+            type="file"
             onChange={formik.handleChange}
-            value={formik.values.lastName}
+            value={formik.values.feb_file} className='add_Employee_input cursor-pointer'
           />
-          {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
-    
-          <label htmlFor="email">Email Address</label>
+          {formik.errors.feb_file ? <div>{formik.errors.feb_file}</div> : null}    
+            </div>
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload August Kpi</label>
           <input
-            id="email"
-            name="email"
-            type="email"
+            name="july_file"
+            type="file"
             onChange={formik.handleChange}
-            value={formik.values.email}
+            value={formik.values.aug_file} className='add_Employee_input cursor-pointer'
           />
-          {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-    
-          <button type="submit">Submit</button>
+          {formik.errors.aug_file ? <div>{formik.errors.aug_file}</div> : null}    
+            </div>
+
+         </div>
+         <div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label  className="mb-2 add_employee_label">Upload March Kpi</label>
+          <input
+            name="jan_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.march_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.march_file ? <div>{formik.errors.march_file}</div> : null}    
+            </div>
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload Sept Kpi</label>
+          <input
+            name="july_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.sept_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.sept_file ? <div>{formik.errors.sept_file}</div> : null}    
+            </div>
+
+         </div>
+         <div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label  className="mb-2 add_employee_label">Upload April Kpi</label>
+          <input
+            name="jan_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.april_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.april_file ? <div>{formik.errors.april_file}</div> : null}    
+            </div>
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload Oct Kpi</label>
+          <input
+            name="july_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.oct_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.oct_file ? <div>{formik.errors.oct_file}</div> : null}    
+            </div>
+
+         </div>
+
+         <div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label  className="mb-2 add_employee_label">Upload May Kpi</label>
+          <input
+            name="jan_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.may_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.may_file ? <div>{formik.errors.may_file}</div> : null}    
+            </div>
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload Nov Kpi</label>
+          <input
+            name="july_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.nov_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.nov_file ? <div>{formik.errors.nov_file}</div> : null}    
+            </div>
+
+         </div>
+         <div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label  className="mb-2 add_employee_label">Upload June Kpi</label>
+          <input
+            name="jan_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.june_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.june_file ? <div>{formik.errors.june_file}</div> : null}    
+            </div>
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload Dec Kpi</label>
+          <input
+            name="july_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.dec_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.dec_file ? <div>{formik.errors.dec_file}</div> : null}    
+            </div>
+
+         </div>
+         <h3>Quartely KPI:
+         </h3>
+
+{/* jan March Kpi */}
+
+<div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label  className="mb-2 add_employee_label">Upload Jan-Mar Kpi</label>
+          <input
+            name="jan_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.jan_mar_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.jan_mar_file ? <div>{formik.errors.jan_mar_file}</div> : null}    
+            </div>
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload July-Sept Kpi</label>
+          <input
+            name="july_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.july_sept_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.july_sept_file ? <div>{formik.errors.july_sept_file}</div> : null}    
+            </div>
+
+         </div>
+         <div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label  className="mb-2 add_employee_label">Upload April-June Kpi</label>
+          <input
+            name="jan_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.april_june_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.april_june_file ? <div>{formik.errors.april_june_file}</div> : null}    
+            </div>
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload Oct-Dec Kpi</label>
+          <input
+            name="july_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.oct_dec_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.oct_dec_file ? <div>{formik.errors.oct_dec_file}</div> : null}    
+            </div>
+
+         </div>
+         <h3>Yearly KPI:
+         </h3>
+
+         <div className="row">
+            <div className="col-6 d-flex flex-column">
+            <label className="mb-2 add_employee_label">Upload Yearly Kpi</label>
+          <input
+            name="yearly_file"
+            type="file"
+            onChange={formik.handleChange}
+            value={formik.values.yearly_file} className='add_Employee_input cursor-pointer'
+          />
+          {formik.errors.yearly_file ? <div>{formik.errors.yearly_file}</div> : null}    
+            </div>
+
+         </div>
+         <div className='d-flex justify-content-between'>
+        <button type="" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn'>   
+        <i class="material-icons-two-tone text-white mx-2"> keyboard_backspace</i> 
+          
+          Back</button>
+        <button type="" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn'> Next 
+        <i class="material-icons-two-tone text-white"> navigate_next</i> 
+        </button>
+
+         </div>
+
         </form>
         
       );

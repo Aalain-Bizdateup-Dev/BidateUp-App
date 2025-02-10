@@ -8,7 +8,7 @@ const Add__Employee = () => {
     <>
     <Step_One/>
     <Second_Step/>
-    <Test/>
+    {/* <Test/> */}
     </>
   )
 }
