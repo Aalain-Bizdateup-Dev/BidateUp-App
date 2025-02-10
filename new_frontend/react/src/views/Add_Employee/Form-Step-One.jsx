@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import '../../../src/index.css';
+import { Employee_Context } from './employee_context';
 const Step_One = () => {
+  const errors = {};
+const {step, setstep} = useContext(Employee_Context);
+// const next = ()=>{
+//   if (!errors) {
+//     console.log("There are Errors");
+    
+//     setstep((prev) => prev + 1)
+//   }
+//   else return "There are errors"
+// }
+const back = ()=>{
+  setstep((prev) => prev - 1)
+}
   const validate = (values) => {
-    const errors = {};
+   
     if (!values.batchid) {
       errors.batchid = 'Batch Id Required';
     }
@@ -33,7 +47,7 @@ const Step_One = () => {
     },
     validate,
     onSubmit: (values) => {
-      console.log(values);
+      setstep((prev) => prev + 1)
     }
   });
   
@@ -142,7 +156,7 @@ const Step_One = () => {
         </div>
       </div>
     <div className="row justify-content-end">
-    <button type="submit" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn'> Next</button>
+    <button type="submit" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn' > Next   <i class="material-icons-two-tone text-white"> navigate_next</i> </button>
     </div>
     </form>
 

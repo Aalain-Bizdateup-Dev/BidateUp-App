@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "../../../src/index.css"
+import { Employee_Context } from './employee_context';
 const Form_Third_Step = () => {
+    const {step, setstep} = useContext(Employee_Context);
+    console.log(step);
+    const next = ()=>{
+      setstep((prev) => prev + 1)
+    }
+    const back = ()=>{
+      setstep((prev) => prev - 1)
+    }
   return (
 <>
 
@@ -134,7 +143,7 @@ const Form_Third_Step = () => {
 
   </div>
   <div className='d-flex justify-content-between'>
-        <button type="" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn'>   
+        <button type="" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn' onClick={back}>   
         <i class="material-icons-two-tone text-white mx-2"> keyboard_backspace</i> 
           
           Back</button>

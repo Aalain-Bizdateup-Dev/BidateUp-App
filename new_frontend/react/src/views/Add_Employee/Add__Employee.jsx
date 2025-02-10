@@ -5,8 +5,7 @@ import { Step, StepLabel, Stepper } from '@mui/material'
 import Form_Third_Step from './Form-Third-Step'
 import Step_One from './Form-Step-One'
 import Second_Step from './Form-Second-Step'
-
-
+import "../../../src/index.css"
 const Add__Employee = () => {
 const {step} = useContext(Employee_Context)  
 const renderStep = (step) => {
@@ -24,10 +23,10 @@ const renderStep = (step) => {
   return (
     <>
   <Stepper activeStep={step} alternativeLabel>
-          <Step>
-            <StepLabel>Personal Details</StepLabel>
+          <Step className='step_form_details_text'>
+            <StepLabel >Personal Details</StepLabel>
           </Step>
-          <Step>
+          <Step >
             <StepLabel>KPI</StepLabel>
           </Step>
           <Step>
