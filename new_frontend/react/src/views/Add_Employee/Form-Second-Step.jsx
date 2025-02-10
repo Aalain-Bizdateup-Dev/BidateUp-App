@@ -292,6 +292,7 @@ const Second_Step = () => {
 
          </div>
          <div className='d-flex justify-content-between'>
+          <p>Test</p>
         <button type="" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn'>   
         <i class="material-icons-two-tone text-white mx-2"> keyboard_backspace</i> 
           
