@@ -84,7 +84,7 @@ const Create_Dept = () => {
           <ProductCard
             params={{
               title: dept.name,
-              primaryText: dept.name,  // Assuming dept.name is the text you want to display
+              primaryText: dept.role,  // Assuming dept.name is the text you want to display
               icon_color: 'text-gray',
               bg_card_color: 'bg-pink-300 ',
               text_color: 'text-gray',

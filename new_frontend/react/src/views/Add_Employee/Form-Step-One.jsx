@@ -150,8 +150,7 @@ const Step_One = () => {
             className="add_Employee_input"
             readOnly
           />
-          {formik.errors.role ? <div className="color-red fw-semibold err-font">{formik.errors.role}</div> : null}
-        </div>
+          </div>
 
         <div className="col-6 d-flex flex-column">
           <label htmlFor="name" className="mb-2 add_employee_label">
