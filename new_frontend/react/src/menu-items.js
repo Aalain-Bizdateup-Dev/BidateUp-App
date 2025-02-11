@@ -72,6 +72,14 @@ const menuItems = {
           url: '/profile'
         },
         {
+          id: 'dept',
+          title: 'Create Departmentsss',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'color_lens',
+          url: '/create-dept'
+        },
+        {
           id: 'icons',
           title: 'Icons',
           type: 'collapse',

@@ -32,6 +32,7 @@ class Department(Base):
     __tablename__ = "departments"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
+    role = Column(String, unique=True, index=True)
     employees = relationship("Employee", back_populates="department")
     questions = relationship("Question", back_populates="department")
     employee_kpi = relationship("Question", back_populates="department")
@@ -44,7 +45,7 @@ class Employee(Base):
     phone_number = Column(Integer, nullable=False)
     department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
     department = relationship("Department", back_populates="employees")
-    employee_var =relationship("Employee", back_populates="question_var")
+    employee_var =relationship("Question", back_populates="question_var")
     
 class Question(Base):
     __tablename__ = "employee_kpi"
@@ -81,6 +82,10 @@ class QuestionCreate(BaseModel):
     question: str
     answer: str
     department: str
+
+class DepartmentCreate(BaseModel):
+    name: str
+    role: str
 
 # API to Add Employee
 @app.post("/add_employee/")
@@ -163,6 +168,19 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+
+@app.post("/create-dept")
+def create_dept(depart :DepartmentCreate, db: Session = Depends(get_db)):
+    find_dept = db.query(Department).filter(depart.name == Department.name or depart.role == Department.role)
+    if find_dept:
+        return {"message": "Department already exists"}
+    else:
+        depart = Department(name=depart.name, role=depart.role)
+        db.add(depart)
+        db.commit()
+        db.refresh(depart)
+    return {"message": "Department created successfully", "department": depart}
+
 
 
 @app.get("/get_data_from_sheet/{name}")

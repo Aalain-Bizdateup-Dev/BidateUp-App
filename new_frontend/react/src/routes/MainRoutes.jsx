@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import AdminLayout from 'layouts/AdminLayout';
 import GuestLayout from 'layouts/GuestLayout';
 import Add__Employee from '../views/Add_Employee/Add__Employee';
+import Create_Dept from '../views/Create-Dept/Create_Dept.jsx';
 
 const DashboardSales = lazy(() => import('../views/dashboard/DashSales/index'));
 
@@ -40,6 +41,7 @@ const MainRoutes = {
           path: '/profile',
           element: <Profile />
         },
+       
         {
           path: '/employee',
           element: <Employee />
@@ -48,6 +50,11 @@ const MainRoutes = {
           path: '/add-employee',
           element: <Add__Employee />
         },
+        {
+          path: '/create-dept',
+          element: <Create_Dept />
+        },
+        
         {
           path: '/color',
           element: <Color />
