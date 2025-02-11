@@ -10,6 +10,7 @@ const Second_Step = () => {
   const next = ()=>{
     setstep((prev) => prev + 1)
   }
+  
   const back = ()=>{
     setstep((prev) => prev - 1)
   }
@@ -88,6 +89,7 @@ const Second_Step = () => {
           oct_dec_file: '',
           yearly_file: '',
         },
+        
         validate,
         onSubmit: values => {
           alert(JSON.stringify(values, null, 2));
@@ -123,7 +125,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload Feb Kpi</label>
           <input
-            name="jan_file"
+            name="feb_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.feb_file} className='add_Employee_input cursor-pointer'
@@ -133,7 +135,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label className="mb-2 add_employee_label">Upload August Kpi</label>
           <input
-            name="july_file"
+            name="aug_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.aug_file} className='add_Employee_input cursor-pointer'
@@ -146,7 +148,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload March Kpi</label>
           <input
-            name="jan_file"
+            name="march_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.march_file} className='add_Employee_input cursor-pointer'
@@ -156,7 +158,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label className="mb-2 add_employee_label">Upload Sept Kpi</label>
           <input
-            name="july_file"
+            name="sept_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.sept_file} className='add_Employee_input cursor-pointer'
@@ -169,7 +171,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload April Kpi</label>
           <input
-            name="jan_file"
+            name="april_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.april_file} className='add_Employee_input cursor-pointer'
@@ -179,7 +181,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label className="mb-2 add_employee_label">Upload Oct Kpi</label>
           <input
-            name="july_file"
+            name="oct_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.oct_file} className='add_Employee_input cursor-pointer'
@@ -193,7 +195,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload May Kpi</label>
           <input
-            name="jan_file"
+            name="may_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.may_file} className='add_Employee_input cursor-pointer'
@@ -203,7 +205,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label className="mb-2 add_employee_label">Upload Nov Kpi</label>
           <input
-            name="july_file"
+            name="nov_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.nov_file} className='add_Employee_input cursor-pointer'
@@ -216,7 +218,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload June Kpi</label>
           <input
-            name="jan_file"
+            name="june_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.june_file} className='add_Employee_input cursor-pointer'
@@ -226,7 +228,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label className="mb-2 add_employee_label">Upload Dec Kpi</label>
           <input
-            name="july_file"
+            name="dec_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.dec_file} className='add_Employee_input cursor-pointer'
@@ -244,7 +246,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload Jan-Mar Kpi</label>
           <input
-            name="jan_file"
+            name="jan_mar_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.jan_mar_file} className='add_Employee_input cursor-pointer'
@@ -254,7 +256,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label className="mb-2 add_employee_label">Upload July-Sept Kpi</label>
           <input
-            name="july_file"
+            name="july_sept_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.july_sept_file} className='add_Employee_input cursor-pointer'
@@ -267,7 +269,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label  className="mb-2 add_employee_label">Upload April-June Kpi</label>
           <input
-            name="jan_file"
+            name="april_june_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.april_june_file} className='add_Employee_input cursor-pointer'
@@ -277,7 +279,7 @@ const Second_Step = () => {
             <div className="col-6 d-flex flex-column">
             <label className="mb-2 add_employee_label">Upload Oct-Dec Kpi</label>
           <input
-            name="july_file"
+            name="oct_dec_file"
             type="file"
             onChange={formik.handleChange}
             value={formik.values.oct_dec_file} className='add_Employee_input cursor-pointer'
