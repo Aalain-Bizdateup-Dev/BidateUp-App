@@ -5,14 +5,7 @@ import { Employee_Context } from './employee_context';
 const Step_One = () => {
   const errors = {};
 const {step, setstep} = useContext(Employee_Context);
-// const next = ()=>{
-//   if (!errors) {
-//     console.log("There are Errors");
-    
-//     setstep((prev) => prev + 1)
-//   }
-//   else return "There are errors"
-// }
+
 const back = ()=>{
   setstep((prev) => prev - 1)
 }
@@ -101,27 +94,19 @@ const back = ()=>{
           {formik.errors.email ? <div className='color-red fw-semibold err-font'>{formik.errors.email}</div> : null}
         </div>
         
-        {/* <div className="col-6 d-flex flex-column">
+        <div className="col-6 d-flex flex-column">
           <label htmlFor="name" className="mb-2 add_employee_label">
           Select Department    <span className="color-red">*</span>
           </label>
-          <input
-            name="name"
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.name}
-            className="add_Employee_input"
-            placeholder="Select Department  ..."
-          />
           <select name="Select DEpt" id="" onChange={formik.handleChange} value={formik.values.name}    className="add_Employee_input">
 
-          <option value="Test">Test</option>
-          <option value="Test">Test</option>
-          <option value="Test">Test</option>
+          <option value="Test"></option>
+          <option value="Test"></option>
+          <option value="Test"></option>
           </select>
          
           {formik.errors.name ? <div className='color-red fw-semibold err-font'>{formik.errors.name}</div> : null}
-        </div> */}
+        </div>
       </div>
       <div className="row mt-4">
         <div className="col-6 d-flex flex-column">

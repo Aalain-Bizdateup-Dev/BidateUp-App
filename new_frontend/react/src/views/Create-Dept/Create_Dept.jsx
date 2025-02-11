@@ -1,18 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import "../../../src/index.css"
+import '../../../src/index.css';
 import { Col, Row } from 'react-bootstrap';
 import ProductCard from '../../components/Widgets/Statistic/ProductCard';
+import { ToastContainer, toast } from 'react-toastify';
+import { create_Dept, fetchAllDepartments } from '../../Api';
 const Create_Dept = () => {
   const initialValues = {
-    department: '',
+    name: '',
     role: ''
   };
+  const [departments, setdepartments] = useState([]);
+  var getAllDept = async () => {
+    const data = await fetchAllDepartments();
+    console.log(data);
+    setdepartments(data.data.data);
+  };
+  useEffect(() => {
+    getAllDept();
+  },[]);
 
-  const validate = values => {
+
+  
+  const handleSubmit = async (values, {resetForm}) => {
+    const data = await create_Dept(values);
+    const response_number = data.data.status_code;
+    const message = data.data.message;
+    getAllDept()
+    if (response_number === 200) {
+      toast.success(message, {
+        position: 'top-right'
+      });
+    } else {
+      toast.error(message, {
+        position: 'top-right'
+      });
+    }
+    resetForm()
+  };
+  const validate = (values) => {
     const errors = {};
-    if (!values.department) {
-      errors.department = 'Department is required';
+    if (!values.name) {
+      errors.name = 'Department is required';
     }
     if (!values.role) {
       errors.role = 'Role is required';
@@ -20,55 +49,54 @@ const Create_Dept = () => {
     return errors;
   };
 
-  const handleSubmit = (values) => {
-    console.log('Form submitted:', values);
-  };
-
   return (
     <div>
       <h3>Create Dept</h3>
-      <Formik
-        initialValues={initialValues}
-        validate={validate}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
         <Form>
-          <div class = "d-flex flex-column"          >
-            <label htmlFor="department" className='mb-2 add_employee_label'>Enter Department Name</label>
-            <Field
-              type="text"
-              id="department"
-              name="department"
-              placeholder="Enter department"
-                className="add_Employee_input"
-            />
-            <ErrorMessage name="department" className='color-red fw-semibold err-font mt-1' component="div" style={{ color: 'red' }} />
+          <div class="d-flex flex-column">
+            <label htmlFor="name" className="mb-2 add_employee_label">
+              Enter Department Name
+            </label>
+            <Field type="text" id="name" name="name" placeholder="Enter department" className="add_Employee_input" />
+            <ErrorMessage name="name" className="color-red fw-semibold err-font mt-1" component="div" style={{ color: 'red' }} />
           </div>
 
-          <div class = "d-flex flex-column mt-3"  >
-            <label htmlFor="role" className='mb-2 add_employee_label'>Enter Role</label>
-            <Field
-              type="text"
-              id="role"
-              name="role"
-              placeholder="Enter Role" className="add_Employee_input"
-            />
-            <ErrorMessage name="role" component="div" className='color-red fw-semibold err-font mt-1' style={{ color: 'red' }} />
+          <div class="d-flex flex-column mt-3">
+            <label htmlFor="role" className="mb-2 add_employee_label">
+              Enter Role
+            </label>
+            <Field type="text" id="role" name="role" placeholder="Enter Role" className="add_Employee_input" />
+            <ErrorMessage name="role" component="div" className="color-red fw-semibold err-font mt-1" style={{ color: 'red' }} />
           </div>
 
-          <button type="submit" className='col-12 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn'>Submit</button>
+          <button type="submit" className="col-12 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn">
+            Submit
+          </button>
         </Form>
       </Formik>
-<h3 className='mt-4'>Departments</h3>
-<Row>
-          <Col sm={6} className=''>
-            <ProductCard params={{ title: 'Tech', primaryText: 'Developer', icon_color:"text-white", bg_card_color:"bg-indigo-300", text_color:"text-white" }} />
-          </Col>
-          <Col sm={6}>
-            <ProductCard params={{ variant: 'primary', title: 'Total Departments', primaryText: '15,830', icon: 'panorama_wide_angle', icon_color:"text-white", bg_card_color:"bg-red-500", text_color:"text-white" }} />
-          </Col>
-        </Row>
-
+      <h3 className="mt-4">Departments</h3>
+      <Row>
+        {
+          departments?.map((dept) => {
+           return(
+             <Col sm={6} className="" key = {dept.id}>
+          <ProductCard
+            params={{
+              title: dept.name,
+              primaryText: dept.name,  // Assuming dept.name is the text you want to display
+              icon_color: 'text-gray',
+              bg_card_color: 'bg-pink-300 ',
+              text_color: 'text-gray',
+              type:"true"
+            }}
+          />
+        </Col>
+           )
+          })
+        }
+      </Row>
+      <ToastContainer />
     </div>
   );
 };

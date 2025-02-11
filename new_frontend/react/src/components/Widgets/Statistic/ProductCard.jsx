@@ -21,8 +21,9 @@ export default function ProductCard({ params }) {
       <Card.Body>
         <Row >
           <Col>
-            <h4 className={`m-b-5  ${params.text_color} `}>{params.title}</h4 >
-            <h3 className={`mb-0 ${params.text_color}`}>{params.primaryText}</h3>
+            <h4 className={`m-b-5  ${params.text_color}  `}>{params.type ? "Department name:":""} {params.title}</h4 >
+            <h3 className={`mb-0 ${params.text_color} ${params.type ? "fs-4" : ""}`}>Role: {params.primaryText}</h3>
+
           </Col>
           <Col sm="auto">
             <i className={`material-icons-two-tone ${params.icon_color}`}>{params.icon}</i>

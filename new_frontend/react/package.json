@@ -10,6 +10,7 @@
     "@tanem/react-nprogress": "^5.0.53",
     "@vitejs/plugin-react": "^4.3.4",
     "apexcharts": "^4.3.0",
+    "axios": "^1.7.9",
     "bootstrap": "5.3.3",
     "feather-icons-react": "^0.7.0",
     "formik": "^2.4.6",

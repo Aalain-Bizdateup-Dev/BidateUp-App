@@ -14,7 +14,7 @@ Base = declarative_base()
 
 # Enable CORS for Frontend Access
 origins = [
-    "http://localhost:5173",
+    "http://localhost:3000",
     "http://localhost:8000",
 ]
 
@@ -169,18 +169,33 @@ async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
-@app.post("/create-dept")
-def create_dept(depart :DepartmentCreate, db: Session = Depends(get_db)):
-    find_dept = db.query(Department).filter(depart.name == Department.name or depart.role == Department.role)
-    if find_dept:
-        return {"message": "Department already exists"}
-    else:
-        depart = Department(name=depart.name, role=depart.role)
-        db.add(depart)
-        db.commit()
-        db.refresh(depart)
-    return {"message": "Department created successfully", "department": depart}
 
+# Create Department Code
+@app.post("/create-dept")
+def create_dept(depart: DepartmentCreate, db: Session = Depends(get_db)):
+    try:
+        find_dept = db.query(Department).filter(
+            (Department.name == depart.name) | (Department.role == depart.role)
+        ).first()
+        if find_dept:
+            return {"message": "Department with the same name or role already exists", "status_code": 403}
+        new_dept = Department(name=depart.name, role=depart.role)
+        db.add(new_dept)
+        db.commit()
+        db.refresh(new_dept)
+        return {"message": "Department created successfully", "status_code": 200,}
+    except Exception as e:
+        db.rollback() 
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}") 
+
+# Get Depart Code
+@app.get("/get-dept")
+def get_dept(db: Session = Depends(get_db)):
+    try:
+     data = db.query(Department).all()
+     return {"message": "Departments fetched successfully", "status_code": 200, "data": data}
+    except Exception as e:
+        return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
 
 
 @app.get("/get_data_from_sheet/{name}")
