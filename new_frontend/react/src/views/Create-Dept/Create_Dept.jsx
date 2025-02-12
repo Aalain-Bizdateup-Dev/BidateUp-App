@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import '../../../src/index.css';
 import { Col, Row } from 'react-bootstrap';
@@ -11,10 +11,15 @@ const Create_Dept = () => {
     role: ''
   };
   const [departments, setdepartments] = useState([]);
+  const [loading, setloading] = useState(false);
   var getAllDept = async () => {
-    const data = await fetchAllDepartments();
+    if (departments.length ===0){
+      setloading(true)
+      const data = await fetchAllDepartments();
     console.log(data);
     setdepartments(data.data.data);
+    }
+    else return
   };
   useEffect(() => {
     getAllDept();
@@ -24,6 +29,7 @@ const Create_Dept = () => {
   
   const handleSubmit = async (values, {resetForm}) => {
     const data = await create_Dept(values);
+
     const response_number = data.data.status_code;
     const message = data.data.message;
     getAllDept()
@@ -76,7 +82,9 @@ const Create_Dept = () => {
         </Form>
       </Formik>
       <h3 className="mt-4">Departments</h3>
-      <Row>
+     
+     {
+      loading ? ( <Row>
         {
           departments?.map((dept) => {
            return(
@@ -95,7 +103,8 @@ const Create_Dept = () => {
            )
           })
         }
-      </Row>
+      </Row>):(<p>Loading</p>)
+     }
       <ToastContainer />
     </div>
   );

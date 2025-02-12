@@ -1,0 +1,19 @@
+    __tablename__ = "employees"
+    id = Column(Integer, primary_key=True, index=True)
+    batch_id = Column(Integer, nullable=False)
+    name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    phone_number = Column(Integer, nullable=False)
+    department_name = Column(String, nullable=False)
+    role = Column(String, nullable=False)
+    department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
+    department = relationship("Department", back_populates="employees")
+
+
+    class EmployeeCreate(BaseModel):
+    batch_id: int
+    name: str
+    email: EmailStr  
+    phone_number: int
+    role: str
+    department_name: str

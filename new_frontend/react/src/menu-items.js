@@ -32,6 +32,14 @@ const menuItems = {
       icon: 'icon-ui',
       children: [
         {
+          id: 'dashboard_main',
+          title: 'Dashboard_main',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'text_fields',
+          url: '/dashboard_main'
+        },
+        {
           id: 'typography',
           title: 'Typography',
           type: 'item',
@@ -39,6 +47,7 @@ const menuItems = {
           iconname: 'text_fields',
           url: '/typography'
         },
+     
         {
           id: 'employee',
           title: 'Employees',

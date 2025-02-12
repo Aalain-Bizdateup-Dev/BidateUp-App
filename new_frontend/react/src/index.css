@@ -99,3 +99,21 @@
 font-size: 20px;
 font-weight: 600;
 }
+.card-dashboard{
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.3s linear;
+}
+.card-dashboard:hover{
+    scale: 1.01;
+    transition: 0.3s linear;
+    background-color: #EE7071;
+
+}
+.card-dashboard-dept-text{
+    font-size: 30px;
+}

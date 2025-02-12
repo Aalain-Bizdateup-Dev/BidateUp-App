@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends, File, UploadFile
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text, BIGINT
 from sqlalchemy.orm import sessionmaker, relationship, Session, declarative_base
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
@@ -34,29 +34,31 @@ class Department(Base):
     name = Column(String, unique=True, index=True)
     role = Column(String, unique=True, index=True)
     employees = relationship("Employee", back_populates="department")
-    questions = relationship("Question", back_populates="department")
-    employee_kpi = relationship("Question", back_populates="department")
+    # questions = relationship("Question", back_populates="department")
+    # employee_kpi = relationship("Question", back_populates="department")
 class Employee(Base):
     __tablename__ = "employees"
     id = Column(Integer, primary_key=True, index=True)
     batch_id = Column(Integer, nullable=False)
     name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
-    phone_number = Column(Integer, nullable=False)
+    phone_number = Column(BIGINT, nullable=False)
+    department_name = Column(String, nullable=False)
+    user_role = Column(String, nullable=False)
     department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
     department = relationship("Department", back_populates="employees")
-    employee_var =relationship("Question", back_populates="question_var")
+    # employee_var =relationship("Question", back_populates="question_var")
     
-class Question(Base):
-    __tablename__ = "employee_kpi"
-    id = Column(Integer, primary_key=True, index=True)
-    questions = Column(Text, nullable=False)
-    answers = Column(Text, nullable=False)
-    month = Column(Text, nullable=False)
-    department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
-    employee_id = Column(Integer, ForeignKey("employees.id"), nullable=False)
-    department = relationship("Department", back_populates="employee_kpi")
-    question_var =relationship("Employee", back_populates="employee_var")
+# class Question(Base):
+#     __tablename__ = "employee_kpi"
+#     id = Column(Integer, primary_key=True, index=True)
+#     questions = Column(Text, nullable=False)
+#     answers = Column(Text, nullable=False)
+#     month = Column(Text, nullable=False)
+#     department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
+#     employee_id = Column(Integer, ForeignKey("employees.id"), nullable=False)
+#     department = relationship("Department", back_populates="employee_kpi")
+#     question_var =relationship("Employee", back_populates="employee_var")
 # Create Tables on Startup
 # @app.on_event("startup")
 # def startup():
@@ -76,7 +78,8 @@ class EmployeeCreate(BaseModel):
     name: str
     email: EmailStr  
     phone_number: int
-    department: str
+    user_role: str
+    department_name: str
 
 class QuestionCreate(BaseModel):
     question: str
@@ -91,30 +94,51 @@ class DepartmentCreate(BaseModel):
 @app.post("/add_employee/")
 def add_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     try:
-        # Check if department exists
-        dept = db.query(Department).filter(Department.name == employee.department).first()
-        if not dept:
-            dept = Department(name=employee.department)
-            db.add(dept)
-            db.commit()
-            db.refresh(dept)
+        dept = db.query(Department).filter(Department.name == employee.department_name).first()
+        if dept is None :
+            raise HTTPException(status_code=404, detail=f"Department '{employee.department_name}' not found")
+        role_check = db.query(Department).filter(Department.role == employee.user_role).first()
+        
+        if role_check is None : 
 
+            raise HTTPException(status_code=404, detail=f"Role '{employee.user_role}' not found")
         emp = Employee(
-            batch_id=employee.batch_id, 
-            name=employee.name, 
-            email=employee.email, 
-            phone_number=employee.phone_number, 
-            department_id=dept.id
+            batch_id=employee.batch_id,
+            name=employee.name,
+            email=employee.email,
+            phone_number=employee.phone_number,
+            user_role=employee.user_role,
+            department_id=dept.id,
+            department_name = employee.department_name
         )
+
+
         db.add(emp)
         db.commit()
         db.refresh(emp)
-
+    
         return {"message": "Employee added successfully", "employee_id": emp.id}
 
+    except HTTPException as he:
+        raise he
     except Exception as e:
+
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+
+
+# Api To Get Departments
+@app.get("/get_departments")
+async def get_All_departments(db: Session = Depends(get_db)):
+    dept = db.query(Department).all()
+    if dept is None:
+        raise HTTPException(status_code = 404, message= "Departments Not Found") 
+    
+    return {
+        "status": "success",
+        "code":200,
+        "dept": dept
+    }
 
 
 # API to Get All Questions for a Department
