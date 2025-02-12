@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Dashboard_cards = ({data}) => {
-  console.log(data);
+const Dashboard_cards = ({data, employees}) => {
+
     if (!data || data.length === 0) {
     return <p>No departments available.</p>;  // Show a message if data is empty
   }
@@ -11,8 +11,8 @@ const Dashboard_cards = ({data}) => {
   <div className="row mt-4">
     {
       data.map((item,index)=>(
-        <div className="col-2 bg-red-500 card-dashboard">
-   <p className='card-dashboard-dept-text mb-0 fw-semibold'>{item.name}</p>
+        <div className=" mx-2 mt-2 col-2 bg-red-500 card-dashboard">
+   <p className='card-dashboard-dept-text mb-0 ' >{item.name}</p>
     </div>
       ))
     }

@@ -221,6 +221,17 @@ def get_dept(db: Session = Depends(get_db)):
     except Exception as e:
         return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
 
+# Get Dept Employees
+@app.get("/get-specific-dept/{dept_name}")
+def get_dept(dept_name:str,db: Session = Depends(get_db)):
+    try:
+     data = db.query(Department).filter(Department.name == dept_name).first()
+     if data:
+         response = db.query(Employee).filter(Employee.department_id == data.id).all()
+         return {"message": "Departments fetched successfully", "status_code": 200, "data": response}
+    except Exception as e:
+        return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
+
 
 @app.get("/get_data_from_sheet/{name}")
 def get_data(name: str, db: Session = Depends(get_db)):
