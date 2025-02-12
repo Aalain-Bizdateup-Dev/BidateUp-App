@@ -1,25 +1,24 @@
-import React from 'react'
+import React from 'react';
 
-const Dashboard_cards = ({data, employees}) => {
-
-    if (!data || data.length === 0) {
+const Dashboard_cards = ({ data, employees, fetchallemp }) => {
+  if (!data || data.length === 0) {
     return <p>No departments available.</p>;  // Show a message if data is empty
   }
+
   return (
-  <>
-  
-  <div className="row mt-4">
-    {
-      data.map((item,index)=>(
-        <div className=" mx-2 mt-2 col-2 bg-red-500 card-dashboard">
-   <p className='card-dashboard-dept-text mb-0 ' >{item.name}</p>
+    <div className="row mt-4">
+      {data.map((item, index) => (
+        <div key={index} className="col-2 mx-2 mt-2 bg-red-500 card-dashboard"       onClick={() => fetchallemp(item.name)}>
+          <p 
+            className='card-dashboard-dept-text mb-0' 
+      
+          >
+            {item.name}
+          </p>
+        </div>
+      ))}
     </div>
-      ))
-    }
-  </div>
-  </>
-  )
-}
+  );
+};
 
-export default Dashboard_cards
-
+export default Dashboard_cards;
