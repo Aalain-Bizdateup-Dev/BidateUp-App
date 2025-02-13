@@ -89,7 +89,11 @@ class QuestionCreate(BaseModel):
 class DepartmentCreate(BaseModel):
     name: str
     role: str
-
+class EmployeeUpdateModel(BaseModel):
+    name:str
+    email:EmailStr
+    phone_number:int
+    
 # API to Add Employee
 @app.post("/add_employee/")
 def add_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
@@ -232,7 +236,26 @@ def get_dept(db: Session = Depends(get_db)):
      return {"message": "Departments fetched successfully", "status_code": 200, "data": data}
     except Exception as e:
         return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
+@app.put("/update-specific-emp/{emp_id}")
+def update_emp(emp_id: int, employee: EmployeeUpdateModel, db: Session = Depends(get_db)):
+    try:
+        data = db.query(Employee).filter(Employee.batch_id == emp_id).first()
+        if not data:
+            raise HTTPException(status_code=404, detail="Employee not found")
+        
+        data.name = employee.name
+        data.email = employee.email
+        data.phone_number = employee.phone_number
+        
+        db.commit()
+        db.refresh(data)
+        
+        return {"message": "Employee updated successfully", "status_code": 200, "data": data}
 
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+        
 # Get Dept Employees
 @app.get("/get-specific-dept/{dept_name}")
 def get_dept(dept_name:str,db: Session = Depends(get_db)):
@@ -243,6 +266,8 @@ def get_dept(dept_name:str,db: Session = Depends(get_db)):
          return {"message": "Departments Employees fetched successfully", "status_code": 200, "data": response}
     except Exception as e:
         return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
+# Update Employee Api
+
 
 
 @app.get("/get_data_from_sheet/{name}")
