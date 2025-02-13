@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { fetchAllDepartments, getDepartmentEmployees } from '../../Api';
+import { fetchAllDepartments, getAllDepartments, getDepartmentEmployees } from '../../Api';
 
 export const Employee_Context = createContext();
 
@@ -7,6 +7,7 @@ const EmployeeProvider = ({ children }) => {
   const [step, setstep] = useState(0);
   const [departmets, setdepartmets] = useState([]);
   const [employees, setemployees] = useState([]);
+  const [allemployees, setallemployees] = useState([])
   const [formData, setFormData] = useState({
     batchid: '',
     name: '',
@@ -33,7 +34,19 @@ const EmployeeProvider = ({ children }) => {
     fetchDataForDropdown();
   }, []);
 
+  useEffect(() => {
+  const fetchAllEmployee = async()=>{
+   try{
+    const data = await getAllDepartments()
+    setallemployees(data.data.data)
+   }
+   catch (error) {
+    console.error("Error fetching employees:", error);  
+  }}
+  fetchAllEmployee()
+  }, [])
   
+
   const fetchallemp = async (name) => {
     if (!name) return; 
     try {
@@ -43,9 +56,11 @@ const EmployeeProvider = ({ children }) => {
       console.error("Error fetching employees:", error);
     }
   };
+ 
+  
 
   return (
-    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp }}>
+    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp, allemployees }}>
       {children}
     </Employee_Context.Provider>
   );

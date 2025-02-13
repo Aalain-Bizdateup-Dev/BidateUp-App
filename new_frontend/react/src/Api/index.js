@@ -16,7 +16,6 @@ return data
 export const getDepartmentEmployees = async (dept_name) => {
     try {
         const response = await axios.get(`${endpoints.get_dept_by_name}/${dept_name}`);
-        console.log(response.data);  
         return response.data;  
     } catch (error) {
         console.error("Error fetching department employees:", error);
@@ -24,3 +23,9 @@ export const getDepartmentEmployees = async (dept_name) => {
     }
 };
 
+export const getAllDepartments = async()=>{
+    const data = await axios.get(endpoints.get_all_employees)
+    console.log(data);
+    
+   return data
+   }

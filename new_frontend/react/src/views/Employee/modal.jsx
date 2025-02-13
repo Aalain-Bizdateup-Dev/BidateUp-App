@@ -8,18 +8,14 @@ const [modal, setmodal] = useState(false)
 
   const [formData, setFormData] = useState({
     name: '',
-    dept: '',
     email: '',
     mobile: '',
-    role: ''
   });
 
   const [errors, setErrors] = useState({
     name: '',
-    dept: '',
     email: '',
     mobile: '',
-    role: ''
   });
 
   // Handle input change
@@ -36,16 +32,14 @@ const [modal, setmodal] = useState(false)
     let formErrors = {};
 
     if (!formData.name) formErrors.name = 'Employee Name is required';
-    if (!formData.dept) formErrors.dept = 'Department is required';
     if (!formData.email) formErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) formErrors.email = 'Email is invalid';
     if (!formData.mobile) formErrors.mobile = 'Mobile is required';
     else if (!/^[0-9]{10}$/.test(formData.mobile)) formErrors.mobile = 'Mobile number should be 10 digits';
-    if (!formData.role) formErrors.role = 'Role is required';
+   
 
     setErrors(formErrors);
 
-    // Return true if there are no errors
     return Object.keys(formErrors).length === 0;
   };
 
@@ -54,13 +48,9 @@ const [modal, setmodal] = useState(false)
     e.preventDefault();
     if (validateForm()) {
     setmodal(false);
-
-      console.log('Form data submitted:', formData);
      formData.name = '';
-      formData.dept = '';
       formData.email = '';
       formData.mobile = '';
-      formData.role = '';
     toast.success("Employee Updated Successfully")
     }
   };
@@ -105,17 +95,7 @@ const [modal, setmodal] = useState(false)
                 </div>
 
                 {/* Department Field */}
-                <div className="mb-3">
-                  <label htmlFor="dept" className="form-label">Department</label>
-                  <input
-                    name="dept"
-                    type="text"
-                    className={`form-control ${errors.dept ? 'is-invalid' : ''}`}
-                    value={formData.dept}
-                    onChange={handleChange}
-                  />
-                  {errors.dept && <div className="invalid-feedback">{errors.dept}</div>}
-                </div>
+               
 
                 {/* Email Field */}
                 <div className="mb-3">
@@ -144,17 +124,7 @@ const [modal, setmodal] = useState(false)
                 </div>
 
                 {/* Role Field */}
-                <div className="mb-3">
-                  <label htmlFor="role" className="form-label">Role</label>
-                  <input
-                    name="role"
-                    type="text"
-                    className={`form-control ${errors.role ? 'is-invalid' : ''}`}
-                    value={formData.role}
-                    onChange={handleChange}
-                  />
-                  {errors.role && <div className="invalid-feedback">{errors.role}</div>}
-                </div>
+               
               </div>
 
               <div className="modal-footer">

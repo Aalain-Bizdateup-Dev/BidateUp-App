@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ProductTable from '../../components/Widgets/ProductTable'
 import productData from 'data/productTableData';
 import "../../../src/index.css"
 import { ToastContainer, toast } from 'react-toastify';
 import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.min';
 import EmployeeModal from './modal';
+import { Employee_Context } from '../Add_Employee/employee_context';
 
 const Employee = () => {
+  const {allemployees} = useContext(Employee_Context);
+  console.log(allemployees);
+  
   const notify = () => toast("Wow so easy!");
 
   const [batchId, setBatchId] = useState(null);
@@ -91,20 +95,20 @@ const closeModal = () => {
   </thead>
   <tbody>
 
-    {alldata.map((item, index) => (
+    {allemployees.map((item, index) => (
       <tr key={index} className="hover:bg-gray-100 ">
-        <td className="px-4 py-3 custom-text">{item.id}</td>
+        <td className="px-4 py-3 custom-text">{item.batch_id}</td>
         <td className="px-4 py-3  custom-text">{item.name}</td>
-        <td className="px-4 py-3 custom-text">{item.Dept}</td>
-        <td className="px-4 py-3 custom-text">{item.mobile}</td>
+        <td className="px-4 py-3 custom-text">{item.department_name}</td>
+        <td className="px-4 py-3 custom-text">{item.phone_number}</td>
         <td className="px-4 py-3 custom-text">{item.email}</td>
-        <td className="px-4 py-3 custom-text">{item.role}</td>
+        <td className="px-4 py-3 custom-text">{item.user_role}</td>
         <td className="px-4 py-2 custom-text flex gap-2">
           
-          <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn"  onClick={() => handleEdit(item.id)} data-bs-toggle="modal"
+          <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn"  onClick={() => handleEdit(item.batch_id)} data-bs-toggle="modal"
         data-bs-target="#exampleModal">Edit</button>
          <EmployeeModal batchid={batchId}  />
-          <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn" onClick={()=>handleDelete(item.id)}>Delete</button>
+          <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn" onClick={()=>handleDelete(item.batch_id)}>Delete</button>
         </td>
       </tr>
     ))}
