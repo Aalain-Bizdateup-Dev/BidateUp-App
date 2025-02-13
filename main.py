@@ -5,9 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 import pandas as pd
 import io
-
+from sqlalchemy.exc import SQLAlchemyError
 # Database Configuration
-DATABASE_URL = "postgresql://postgres:Admin@localhost/proper_app"
+DATABASE_URL = "postgresql://postgres:admin@localhost/proper_app"
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -211,7 +211,20 @@ def create_dept(depart: DepartmentCreate, db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback() 
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}") 
-
+    
+# Get All Employeess Api    
+@app.get("/get_all_employees")
+def get_all_employees(db: Session = Depends(get_db)):
+   try:
+       data = db.query(Employee).all()
+       if data is None:
+        return {"message": "No Data Found", "status_code": 404}
+       return {"message": "Data Fetched Successfully", "status_code": 200, "data": data}
+   except SQLAlchemyError as e:
+       raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+   except Exception as e:
+       return  {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}  
+    
 # Get Depart Code
 @app.get("/get-dept")
 def get_dept(db: Session = Depends(get_db)):
@@ -246,3 +259,6 @@ def get_data(name: str, db: Session = Depends(get_db)):
     except Exception as e:
         print(f"Error: {e}")
         return {"error": str(e)}
+
+
+# get all empployees

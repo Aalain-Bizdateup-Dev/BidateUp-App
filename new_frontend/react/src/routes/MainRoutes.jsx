@@ -5,6 +5,7 @@ import GuestLayout from 'layouts/GuestLayout';
 import Add__Employee from '../views/Add_Employee/Add__Employee';
 import Create_Dept from '../views/Create-Dept/Create_Dept.jsx';
 import Main_Dashboard from "../views/Main-Dashboard/dashboard.jsx"
+import Second_User from '../views/Main-Dashboard/second-user.jsx';
 const DashboardSales = lazy(() => import('../views/dashboard/DashSales/index'));
 
 const Typography = lazy(() => import('../views/ui-elements/basic/BasicTypography'));
@@ -40,6 +41,10 @@ const MainRoutes = {
         {
           path: '/dashboard_main',
           element: <Main_Dashboard />
+        },
+        {
+          path: '/second-step',
+          element: <Second_User />
         },
         {
           path: '/profile',
