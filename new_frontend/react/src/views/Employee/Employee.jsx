@@ -9,42 +9,17 @@ import { Employee_Context } from '../Add_Employee/employee_context';
 
 const Employee = () => {
   const {allemployees} = useContext(Employee_Context);
-  console.log(allemployees);
   
   const notify = () => toast("Wow so easy!");
 
   const [batchId, setBatchId] = useState(null);
 
-  const alldata = [
-    { id:1,
-
-      name:"Aalain",
-      Dept:"Tech",
-      mobile:1234,
-      email:"a@gmail.com",
-      role:"Web Developer"
-    },
-    { id:4165165161,
-      name:"asfdasd",
-      Dept:"Tech",
-      mobile:1234,
-      email:"a@gmail.com",
-      role:"Web Developer"
-    },
-    { id:1541603289616,
-      name:"Aalain",
-      Dept:"Tech",
-      mobile:1234,
-      email:"a@gmail.com",
-      role:"Web Developer"
-    }
-  ]
-
+ 
 // Handle Delete Function
 const handleDelete = (id) => {
  if(( confirm("Are You Sure You Want To Delete This Employee"))){
   console.log(id);
-  toast.success("Employee Deleted Successfully!");
+  // toast.success("Employee Deleted Successfully!");
  }
  else{
   toast.error("Employee Not Deleted!");
@@ -53,8 +28,7 @@ const handleDelete = (id) => {
 
 const handleEdit = (id) => {
   setBatchId(id); 
-  console.log(batchId);
-  
+    
 };
 const closeModal = () => {
   setshowmodal(false)
@@ -107,7 +81,7 @@ const closeModal = () => {
           
           <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn"  onClick={() => handleEdit(item.batch_id)} data-bs-toggle="modal"
         data-bs-target="#exampleModal">Edit</button>
-         <EmployeeModal batchid={batchId}  />
+         <EmployeeModal batchid={batchId} employees = {allemployees} />
           <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn" onClick={()=>handleDelete(item.batch_id)}>Delete</button>
         </td>
       </tr>

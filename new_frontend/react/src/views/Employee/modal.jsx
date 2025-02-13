@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
-const EmployeeModal = ({ batchid, onClose }) => {
+const EmployeeModal = ({ batchid, onClose, employees }) => {
   // State to store the form data and errors
+  console.log("Hi");
+  
+if (!employees || employees.length === 0) return null;
 
 const [modal, setmodal] = useState(false)
 
@@ -40,7 +43,7 @@ const [modal, setmodal] = useState(false)
 
     setErrors(formErrors);
 
-    return Object.keys(formErrors).length === 0;
+   
   };
 
   // Handle form submission

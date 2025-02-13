@@ -267,8 +267,15 @@ def get_dept(dept_name:str,db: Session = Depends(get_db)):
     except Exception as e:
         return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
 # Update Employee Api
-
-
+@app.get("/get-specific-emp/{emp_id}")
+def get_specific_emp(emp_id: int, db: Session = Depends(get_db)):
+    try:
+        dept = db.query(Employee).filter(Employee.batch_id == emp_id).first()
+        if  dept is None:
+            raise HTTPException(message="No Data Found", status_code = 404)
+        return {"message":"Data Found SuccessFully", "status_code":200, "data":dept}
+    except HTTPException as e:
+        raise HTTPException (message="No Data Found", status_code = 404)
 
 @app.get("/get_data_from_sheet/{name}")
 def get_data(name: str, db: Session = Depends(get_db)):
