@@ -8,6 +8,7 @@ const EmployeeProvider = ({ children }) => {
   const [departmets, setdepartmets] = useState([]);
   const [employees, setemployees] = useState([]);
   const [allemployees, setallemployees] = useState([])
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     batchid: '',
     name: '',
@@ -46,21 +47,27 @@ const EmployeeProvider = ({ children }) => {
   fetchAllEmployee()
   }, [])
   
-
   const fetchallemp = async (name) => {
     if (!name) return; 
+    setLoading(true)
+   setTimeout(async() => {
     try {
       const data = await getDepartmentEmployees(name);
-      setemployees(data);
+      setemployees(data.data);
+      setLoading(false)
+
     } catch (error) {
       console.error("Error fetching employees:", error);
     }
+   }, 1000);
   };
- 
+
+
+
   
 
   return (
-    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp, allemployees }}>
+    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp, allemployees, loading }}>
       {children}
     </Employee_Context.Provider>
   );

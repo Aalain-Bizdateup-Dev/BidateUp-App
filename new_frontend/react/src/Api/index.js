@@ -25,7 +25,5 @@ export const getDepartmentEmployees = async (dept_name) => {
 
 export const getAllDepartments = async()=>{
     const data = await axios.get(endpoints.get_all_employees)
-    console.log(data);
-    
    return data
    }

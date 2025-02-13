@@ -224,7 +224,6 @@ def get_all_employees(db: Session = Depends(get_db)):
        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
    except Exception as e:
        return  {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}  
-    
 # Get Depart Code
 @app.get("/get-dept")
 def get_dept(db: Session = Depends(get_db)):
@@ -241,7 +240,7 @@ def get_dept(dept_name:str,db: Session = Depends(get_db)):
      data = db.query(Department).filter(Department.name == dept_name).first()
      if data:
          response = db.query(Employee).filter(Employee.department_id == data.id).all()
-         return {"message": "Departments fetched successfully", "status_code": 200, "data": response}
+         return {"message": "Departments Employees fetched successfully", "status_code": 200, "data": response}
     except Exception as e:
         return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
 
