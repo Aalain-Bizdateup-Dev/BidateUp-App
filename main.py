@@ -236,13 +236,13 @@ def get_dept(db: Session = Depends(get_db)):
      return {"message": "Departments fetched successfully", "status_code": 200, "data": data}
     except Exception as e:
         return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
+
 @app.put("/update-specific-emp/{emp_id}")
 def update_emp(emp_id: int, employee: EmployeeUpdateModel, db: Session = Depends(get_db)):
     try:
         data = db.query(Employee).filter(Employee.batch_id == emp_id).first()
         if not data:
             raise HTTPException(status_code=404, detail="Employee not found")
-        
         data.name = employee.name
         data.email = employee.email
         data.phone_number = employee.phone_number
@@ -256,7 +256,7 @@ def update_emp(emp_id: int, employee: EmployeeUpdateModel, db: Session = Depends
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
         
-# Get Dept Employees
+# Get Employess Department Api
 @app.get("/get-specific-dept/{dept_name}")
 def get_dept(dept_name:str,db: Session = Depends(get_db)):
     try:
@@ -266,7 +266,7 @@ def get_dept(dept_name:str,db: Session = Depends(get_db)):
          return {"message": "Departments Employees fetched successfully", "status_code": 200, "data": response}
     except Exception as e:
         return {"message": "Failed To fetch Data", "status_code":403, "error": str(e)}
-# Update Employee Api
+# Get Specific Employee For Modal
 @app.get("/get-specific-emp/{emp_id}")
 def get_specific_emp(emp_id: int, db: Session = Depends(get_db)):
     try:

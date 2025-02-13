@@ -8,18 +8,15 @@ import EmployeeModal from './modal';
 import { Employee_Context } from '../Add_Employee/employee_context';
 
 const Employee = () => {
-  const {allemployees} = useContext(Employee_Context);
-  
-  const notify = () => toast("Wow so easy!");
-
+  const {allemployees, getModalEmployee, modalemployee, updateSpecificEmployee} = useContext(Employee_Context);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [batchId, setBatchId] = useState(null);
 
- 
+
 // Handle Delete Function
 const handleDelete = (id) => {
  if(( confirm("Are You Sure You Want To Delete This Employee"))){
-  console.log(id);
-  // toast.success("Employee Deleted Successfully!");
+  toast.success("Employee Deleted Successfully!");
  }
  else{
   toast.error("Employee Not Deleted!");
@@ -28,18 +25,18 @@ const handleDelete = (id) => {
 
 const handleEdit = (id) => {
   setBatchId(id); 
-    
+  getModalEmployee(id)
 };
+
 const closeModal = () => {
-  setshowmodal(false)
+  setIsModalOpen(false)
 }
   return (
     <>
-  <div className="p-4 bg-gray-100 box-shdow-back
+  <div className="p-4 bg-gray-100 box-shdow-back overflow-x-auto
 ">
-<div>
-        <ToastContainer />
-      </div>
+
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={true} pauseOnHover={true} />
 
   <h3>BizDateUp  Employees </h3>
   <div className='d-flex justify-content-between mb-4 align-items-center'>
@@ -77,12 +74,12 @@ const closeModal = () => {
         <td className="px-4 py-3 custom-text">{item.phone_number}</td>
         <td className="px-4 py-3 custom-text">{item.email}</td>
         <td className="px-4 py-3 custom-text">{item.user_role}</td>
-        <td className="px-4 py-2 custom-text flex gap-2">
+        <td className="px-4 py-2 custom-text flex gap-2 justify-content-center align-items-center">
           
-          <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn"  onClick={() => handleEdit(item.batch_id)} data-bs-toggle="modal"
+          <button className="bg-blue-500 text-white px-3 py-1 rounded custom-table-btn mx-4 mb-3"  onClick={() => handleEdit(item.batch_id)} data-bs-toggle="modal"
         data-bs-target="#exampleModal">Edit</button>
-         <EmployeeModal batchid={batchId} employees = {allemployees} />
-          <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn" onClick={()=>handleDelete(item.batch_id)}>Delete</button>
+         <EmployeeModal batchid={batchId} modalemployee = {modalemployee} updateSpecificEmployee = {updateSpecificEmployee} closeModal = {closeModal}/>
+          <button className="bg-red-500 text-white px-3 py-1 rounded mx-3 custom-table-btn mx-4 mb-3" onClick={()=>handleDelete(item.batch_id)}>Delete</button>
         </td>
       </tr>
     ))}

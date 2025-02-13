@@ -27,3 +27,18 @@ export const getAllDepartments = async()=>{
     const data = await axios.get(endpoints.get_all_employees)
    return data
    }
+   export const getSpecificEmployeeModal = async (dept_name) => {
+    try {
+        const response = await axios.get(`${endpoints.get_specific_employee}/${dept_name}`);
+        return response.data;  
+    } catch (error) {
+        console.error("Error fetching  Specific Modal Employee:", error);
+        return null; 
+    }
+};   
+
+export const updateEmployee = async(department_data,id)=>{
+    const data = await axios.put(`${endpoints.update_employee}/${id}`, department_data)
+    const response =  data
+     return response
+}
