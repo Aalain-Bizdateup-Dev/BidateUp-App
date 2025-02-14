@@ -20,20 +20,20 @@ const Step_One = () => {
 
   const validate = (values) => {
     const errors = {};
-    if (!values.batchid) {
-      errors.batchid = 'Batch Id Required';
+    if (!values.batch_id) {
+      errors.batch_id = 'Batch Id Required';
     }
     if (!values.name) {
       errors.name = 'Name Is Required';
     }
-    if (!values.number) {
-      errors.number = 'Number Is Required';
+    if (!values.phone_number) {
+      errors.phone_number = 'Number Is Required';
     }
     if (!values.email) {
       errors.email = 'Email Is Required';
     }
-    if (!values.dept) {
-      errors.dept = 'Department Is Required';
+    if (!values.department_name) {
+      errors.department_name = 'Department Is Required';
     }
     return errors;
   };
@@ -42,7 +42,7 @@ const Step_One = () => {
     initialValues: formData,
     validate,
     onSubmit: (values) => {
-      updateFormData({ ...values, "role": userselected });
+      updateFormData({ ...values, "user_role": userselected });
       setstep((prev) => prev + 1);
     }
   });
@@ -50,34 +50,34 @@ const Step_One = () => {
   
   useEffect(() => {
     const findRole = () => {
-      const role = datas?.find((item) => item.name === formik.values.dept)?.role;
-      if (role && role !== formik.values.role) {
+      const role = datas?.find((item) => item.name === formik.values.department_name)?.role;
+      if (role && role !== formik.values.user_role) {
         setuserselected(role);
-        formik.setFieldValue('role', role); // Update the role in Formik form only if it's different
+        formik.setFieldValue('user_role', role); // Update the role in Formik form only if it's different
       }
     };
 
-    if (formik.values.dept) {
+    if (formik.values.department_name) {
       findRole();
     }
-  }, [formik.values.dept, datas]); // Add formik.values.role to prevent unnecessary updates
+  }, [formik.values.department_name, datas]); // Add formik.values.role to prevent unnecessary updates
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="row mt-4">
         <div className="col-6 d-flex flex-column">
-          <label htmlFor="batchid" className="mb-2 add_employee_label">
+          <label htmlFor="batch_id" className="mb-2 add_employee_label">
             Enter Batch ID <span className="color-red">*</span>
           </label>
           <input
-            name="batchid"
+            name="batch_id"
             type="number"
             onChange={formik.handleChange}
-            value={formik.values.batchid}
+            value={formik.values.batch_id}
             className="add_Employee_input"
             placeholder="Enter Batch id .."
           />
-          {formik.errors.batchid && <div className="color-red fw-semibold err-font">{formik.errors.batchid}</div>}
+          {formik.errors.batch_id && <div className="color-red fw-semibold err-font">{formik.errors.batch_id}</div>}
         </div>
 
         <div className="col-6 d-flex flex-column">
@@ -114,13 +114,13 @@ const Step_One = () => {
         </div>
 
         <div className="col-6 d-flex flex-column">
-          <label htmlFor="dept" className="mb-2 add_employee_label">
+          <label htmlFor="department_name" className="mb-2 add_employee_label">
             Select Department <span className="color-red">*</span>
           </label>
           <select
-            value={formik.values.dept}
-            name="dept"
-            id="dept"
+            value={formik.values.department_name}
+            name="department_name"
+            id="department_name"
             onChange={formik.handleChange}
             className="add_Employee_input"
           >
@@ -130,38 +130,38 @@ const Step_One = () => {
               </option>
             ))}
           </select>
-          {formik.errors.dept && <div className="color-red fw-semibold err-font">{formik.errors.dept}</div>}
+          {formik.errors.department_name && <div className="color-red fw-semibold err-font">{formik.errors.department_name}</div>}
         </div>
       </div>
 
       <div className="row mt-4">
         <div className="col-6 d-flex flex-column">
-          <label htmlFor="role" className="mb-2 add_employee_label">
+          <label htmlFor="user_role" className="mb-2 add_employee_label">
             Enter Role <span className="color-red">*</span>
           </label>
           <input
-            name="role"
+            name="user_role"
             type="text"
             onChange={formik.handleChange}
-            value={formik.values.role}
+            value={formik.values.user_role}
             className="add_Employee_input"
             readOnly
           />
         </div>
 
         <div className="col-6 d-flex flex-column">
-          <label htmlFor="number" className="mb-2 add_employee_label">
+          <label htmlFor="phone_number" className="mb-2 add_employee_label">
             Enter Phone Number <span className="color-red">*</span>
           </label>
           <input
-            name="number"
+            name="phone_number"
             type="number"
             onChange={formik.handleChange}
-            value={formik.values.number}
+            value={formik.values.phone_number}
             className="add_Employee_input"
             placeholder="Enter Number ..."
           />
-          {formik.errors.number && <div className="color-red fw-semibold err-font">{formik.errors.number}</div>}
+          {formik.errors.phone_number && <div className="color-red fw-semibold err-font">{formik.errors.phone_number}</div>}
         </div>
       </div>
 

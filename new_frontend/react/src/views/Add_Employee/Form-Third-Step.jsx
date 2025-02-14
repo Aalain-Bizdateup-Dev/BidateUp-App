@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "../../../src/index.css"
 import { Employee_Context } from './employee_context';
 const Form_Third_Step = () => {
     const {step, setstep} = useContext(Employee_Context);
+    const [personaldetails, setpersonaldetails] = useState([])
     console.log(step);
     const next = ()=>{
       setstep((prev) => prev + 1)
@@ -10,6 +11,16 @@ const Form_Third_Step = () => {
     const back = ()=>{
       setstep((prev) => prev - 1)
     }
+
+useEffect(() => {
+  const getFormDatafromStorage = ()=>{
+    const data = JSON.parse(localStorage.getItem('data'));
+    setpersonaldetails(data)
+  }
+getFormDatafromStorage()
+
+}, [])
+
   return (
 <>
 
@@ -20,34 +31,34 @@ const Form_Third_Step = () => {
   <h3 className=''>Personal Details:</h3>
 <div className="d-flex justify-content-between">
 <p className='review-text fw-semibold'>Batch Id:</p>
-<p className='review-text fw-semibold'>123</p>
+<p className='review-text fw-semibold'>{personaldetails.batch_id}</p>
 </div>
 <hr  className='m-0'/>
 
 <div className="d-flex justify-content-between mt-3">
 <p className='review-text fw-semibold'>Name:</p>
-<p className='review-text fw-semibold'>Test Name</p>
+<p className='review-text fw-semibold'>{personaldetails.name}</p>
 </div>
 <hr  className='m-0'/>
 
 <div className="d-flex justify-content-between mt-3">
 <p className='review-text fw-semibold'>Email:</p>
-<p className='review-text fw-semibold'>tets@gmail.com</p>
+<p className='review-text fw-semibold'>{personaldetails.email}</p>
 </div>
 <hr  className='m-0'/>
 <div className="d-flex justify-content-between mt-3">
 <p className='review-text fw-semibold'>Department:</p>
-<p className='review-text fw-semibold'>Test DEpt</p>
+<p className='review-text fw-semibold'>{personaldetails.department_name}</p>
 </div>
 <hr  className='m-0'/>
 <div className="d-flex justify-content-between mt-3">
 <p className='review-text fw-semibold'>Role:</p>
-<p className='review-text fw-semibold'>Test Role</p>
+<p className='review-text fw-semibold'>{personaldetails.user_role}</p>
 </div>
 <hr  className='m-0'/>
 <div className="d-flex justify-content-between mt-3">
 <p className='review-text fw-semibold'>Phone Number:</p>
-<p className='review-text fw-semibold'>123</p>
+<p className='review-text fw-semibold'>{personaldetails.phone_number}</p>
 </div>
 <hr  className='m-0'/>
 </div>

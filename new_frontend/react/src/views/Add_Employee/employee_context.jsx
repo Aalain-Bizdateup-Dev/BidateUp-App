@@ -12,12 +12,12 @@ const EmployeeProvider = ({ children }) => {
   const [updateemployee, setupdateemployee] = useState([])
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
-    batchid: '',
+    batch_id: '',
     name: '',
     email: '',
-    number: '',
-    role: '',
-    dept: ''
+    phone_number: '',
+    user_role: '',
+    department_role: ''
   });
 useEffect(() => {
 localStorage.clear()
@@ -26,9 +26,7 @@ localStorage.setItem('data', JSON.stringify(formData));
 
 
   const updateFormData = (newData) => {
-    // localStorage.clear();
     setFormData((prevData) => ({ ...prevData, ...newData }));
-    // localStorage.setItem('data', JSON.stringify(formData));
   };
 
   useEffect(() => {
