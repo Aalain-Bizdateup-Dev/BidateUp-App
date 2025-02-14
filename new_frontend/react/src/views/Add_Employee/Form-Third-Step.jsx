@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import "../../../src/index.css"
 import { Employee_Context } from './employee_context';
 const Form_Third_Step = () => {
-    const {step, setstep} = useContext(Employee_Context);
+    const {step, setstep, addEmployeeDB} = useContext(Employee_Context);
     const [personaldetails, setpersonaldetails] = useState([])
-    console.log(step);
+    
     const next = ()=>{
       setstep((prev) => prev + 1)
     }
@@ -15,11 +15,18 @@ const Form_Third_Step = () => {
 useEffect(() => {
   const getFormDatafromStorage = ()=>{
     const data = JSON.parse(localStorage.getItem('data'));
+    console.log(data);
+    
     setpersonaldetails(data)
   }
 getFormDatafromStorage()
 
 }, [])
+
+const senddatatoDb = async(data)=>{
+  const response = await addEmployeeDB(data)
+  console.log(response);
+}
 
   return (
 <>
@@ -158,7 +165,7 @@ getFormDatafromStorage()
         <i class="material-icons-two-tone text-white mx-2"> keyboard_backspace</i> 
           
           Back</button>
-        <button type="" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn'> Submit 
+        <button type="" className='col-3 justify-content-end mt-4 bg-blue-500 text-white px-3 py-1 rounded custom-table-btn' onClick={()=> senddatatoDb(personaldetails)}> Submit 
 
         </button>
 

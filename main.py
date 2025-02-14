@@ -6,6 +6,7 @@ from pydantic import BaseModel, EmailStr
 import pandas as pd
 import io
 from sqlalchemy.exc import SQLAlchemyError
+from typing import List, Optional
 # Database Configuration
 DATABASE_URL = "postgresql://postgres:Admin@localhost/proper_app"
 engine = create_engine(DATABASE_URL, echo=True)
@@ -49,16 +50,16 @@ class Employee(Base):
     department = relationship("Department", back_populates="employees")
     # employee_var =relationship("Question", back_populates="question_var")
     
-# class Question(Base):
-#     __tablename__ = "employee_kpi"
-#     id = Column(Integer, primary_key=True, index=True)
-#     questions = Column(Text, nullable=False)
-#     answers = Column(Text, nullable=False)
-#     month = Column(Text, nullable=False)
-#     department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
-#     employee_id = Column(Integer, ForeignKey("employees.id"), nullable=False)
-#     department = relationship("Department", back_populates="employee_kpi")
-#     question_var =relationship("Employee", back_populates="employee_var")
+class Question(Base):
+    __tablename__ = "employee_kpi"
+    id = Column(Integer, primary_key=True, index=True)
+    questions = Column(Text, nullable=False)
+    answers = Column(Text, nullable=False)
+    month = Column(Text, nullable=False)
+    department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
+    employee_id = Column(Integer, ForeignKey("employees.id"), nullable=False)
+    department = relationship("Department", back_populates="employee_kpi")
+    question_var =relationship("Employee", back_populates="employee_var")
 # Create Tables on Startup
 # @app.on_event("startup")
 # def startup():
@@ -162,36 +163,43 @@ def get_all_departments(db: Session = Depends(get_db)):
 
 # API to Upload CSV and Store Questions in Database
 @app.post("/upload-csv/")
-async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def upload_csv(files: List[UploadFile] = File(...), db: Session = Depends(get_db)):
     try:
-        contents = await file.read()
-        df = pd.read_csv(io.StringIO(contents.decode("utf-8")))
+        for file in files:
+            contents = await file.read()
+            df = pd.read_csv(io.StringIO(contents.decode("utf-8")))
 
-        # Ensure correct CSV format
-        if "question" not in df.columns or "month" not in df.columns or "answer" not in df.columns or "department" not in df.columns or "emp" not in df.columns:
-            return {"error": "CSV must contain 'question', 'answer', and 'department', month, emp columns"}
+            # Ensure correct CSV format
+            if "question" not in df.columns or "month" not in df.columns or "answer" not in df.columns or "department" not in df.columns or "emp" not in df.columns:
+                raise HTTPException(status_code=400, detail="CSV must contain 'question', 'answer', 'department', 'month', and 'emp' columns")
+            for _, row in df.iterrows():
+                # Find employee by name
+                employee_name = db.query(Employee).filter(Employee.name == row['emp']).first()
+                if not employee_name:
+                    raise HTTPException(status_code=404, detail=f"Employee {row['emp']} not found")
+                
+                # Find department or create it if it doesn't exist
+                dept = db.query(Department).filter(Department.name == row["department"]).first()
+                if not dept:
+                    dept = Department(name=row["department"])
+                    db.add(dept)
+                    db.commit()
+                    db.refresh(dept)
 
-        for _, row in df.iterrows():
-            employee_name = db.query(Employee).filter(Employee.name == row['emp']).first()  
-            dept = db.query(Department).filter(Department.name == row["department"]).first()
-            if not dept:
-                dept = Department(name=row["department"])
-                db.add(dept)
-                db.commit()
-                db.refresh(dept)
+                # Create and add the QA entry to the DB
+                qa_entry = Question(
+                    questions=row["question"],
+                    answers=row["answer"],
+                    month=row["month"],
+                    department_id=dept.id,
+                    employee_id=employee_name.id
+                )
+                db.add(qa_entry)
 
-            
-            qa_entry = Question(
-                questions=row["question"], 
-                answers=row["answer"], 
-                month=row["month"], 
-                department_id=dept.id,
-                employee_id = employee_name.id
-            )
-            db.add(qa_entry)
+            # Commit after processing all rows in a file
+            db.commit()
 
-        db.commit()
-        return {"message": "CSV uploaded and questions stored successfully"}
+        return {"message": f"{len(files)} CSV files uploaded and questions stored successfully."}
 
     except Exception as e:
         db.rollback()

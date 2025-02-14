@@ -22,7 +22,7 @@ export const getDepartmentEmployees = async (dept_name) => {
         return null; 
     }
 };
-
+// Get All DEpartments Api Call
 export const getAllDepartments = async()=>{
     const data = await axios.get(endpoints.get_all_employees)
    return data
@@ -36,9 +36,16 @@ export const getAllDepartments = async()=>{
         return null; 
     }
 };   
-
+// Update Employee Data
 export const updateEmployee = async(department_data,id)=>{
     const data = await axios.put(`${endpoints.update_employee}/${id}`, department_data)
+    const response =  data
+     return response
+}
+
+// Add Employee Personal Details
+export const addEmployee = async(employee_data)=>{
+    const data = await axios.post(endpoints.add_employee, employee_data)
     const response =  data
      return response
 }

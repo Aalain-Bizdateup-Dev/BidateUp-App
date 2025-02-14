@@ -7,5 +7,6 @@ export const endpoints = {
     get_dept_by_name:`${BASE_URL}/get-specific-dept`,
     get_all_employees:`${BASE_URL}/get_all_employees`,
     get_specific_employee:`${BASE_URL}/get-specific-emp`,
-    update_employee:`${BASE_URL}/update-specific-emp`
+    update_employee:`${BASE_URL}/update-specific-emp`,
+    add_employee:`${BASE_URL}/add_employee`
 }

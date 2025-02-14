@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { fetchAllDepartments, getAllDepartments, getDepartmentEmployees, getSpecificEmployeeModal, updateEmployee,  } from '../../Api';
+import { addEmployee, fetchAllDepartments, getAllDepartments, getDepartmentEmployees, getSpecificEmployeeModal, updateEmployee,  } from '../../Api';
 
 export const Employee_Context = createContext();
 
@@ -17,7 +17,7 @@ const EmployeeProvider = ({ children }) => {
     email: '',
     phone_number: '',
     user_role: '',
-    department_role: ''
+    department_name: ''
   });
 useEffect(() => {
 localStorage.clear()
@@ -54,7 +54,17 @@ localStorage.setItem('data', JSON.stringify(formData));
   }}
   fetchAllEmployee()
   }, [])
+  // Add Employee Api Call
+  const addEmployeeDB = async(data)=>{
+const emp =  await addEmployee(data) 
+if (emp){
+  console.log("Employee Added Successfully");
   
+}
+return "Something Went Wrong"
+  }
+
+
   const fetchallemp = async (name) => {
     if (!name) return; 
     setLoading(true)
@@ -101,7 +111,7 @@ localStorage.setItem('data', JSON.stringify(formData));
   };
 
   return (
-    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp, allemployees, loading,modalemployee, getModalEmployee, updateSpecificEmployee, updateemployee, setFormData }}>
+    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp, allemployees, loading,modalemployee, getModalEmployee, updateSpecificEmployee, updateemployee, setFormData, addEmployeeDB }}>
       {children}
     </Employee_Context.Provider>
   );
