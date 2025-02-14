@@ -82,7 +82,7 @@ const menuItems = {
         },
         {
           id: 'dept',
-          title: 'Create Departmentsss',
+          title: 'Create Departments',
           type: 'item',
           icon: 'material-icons-two-tone',
           iconname: 'color_lens',

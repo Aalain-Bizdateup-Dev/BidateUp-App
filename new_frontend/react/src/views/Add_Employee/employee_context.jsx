@@ -19,9 +19,16 @@ const EmployeeProvider = ({ children }) => {
     role: '',
     dept: ''
   });
+useEffect(() => {
+localStorage.clear()
+localStorage.setItem('data', JSON.stringify(formData));
+}, [formData])
+
 
   const updateFormData = (newData) => {
+    // localStorage.clear();
     setFormData((prevData) => ({ ...prevData, ...newData }));
+    // localStorage.setItem('data', JSON.stringify(formData));
   };
 
   useEffect(() => {
@@ -36,6 +43,7 @@ const EmployeeProvider = ({ children }) => {
 
     fetchDataForDropdown();
   }, []);
+
 
   useEffect(() => {
   const fetchAllEmployee = async()=>{
@@ -95,7 +103,7 @@ const EmployeeProvider = ({ children }) => {
   };
 
   return (
-    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp, allemployees, loading,modalemployee, getModalEmployee, updateSpecificEmployee, updateemployee }}>
+    <Employee_Context.Provider value={{ step, setstep, formData, updateFormData, departmets, employees, fetchallemp, allemployees, loading,modalemployee, getModalEmployee, updateSpecificEmployee, updateemployee, setFormData }}>
       {children}
     </Employee_Context.Provider>
   );

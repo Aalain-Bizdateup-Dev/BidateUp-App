@@ -5,9 +5,9 @@ import { Employee_Context } from './employee_context';
 import { fetchAllDepartments } from '../../Api';
 
 const Step_One = () => {
-  const { step, setstep, formData, updateFormData } = useContext(Employee_Context);
+  const { step, setstep, formData, updateFormData, setFormData } = useContext(Employee_Context);
   const [datas, setdata] = useState([]);
-
+  const [userselected, setuserselected] = useState('');
 
   useEffect(() => {
     const fetchdatafordropdown = async () => {
@@ -38,28 +38,29 @@ const Step_One = () => {
     return errors;
   };
 
-
   const formik = useFormik({
-    initialValues: formData, 
-    validate, 
+    initialValues: formData,
+    validate,
     onSubmit: (values) => {
-      updateFormData(values);
-      setstep((prev) => prev + 1)
+      updateFormData({ ...values, "role": userselected });
+      setstep((prev) => prev + 1);
     }
   });
-console.log(formData);
 
-  // useEffect(() => {
-  //   const findRole = () => {
-  //     if (Array.isArray(formData)) {
-  //       const role = formData.find((item) => item.name === formik.values.dept);
-  //       console.log(role);
-  //     } else {
-  //       console.error("formData is not an array", formData);
-  //     }
-  //   };
-  //   findRole()
-  // }, []); 
+  
+  useEffect(() => {
+    const findRole = () => {
+      const role = datas?.find((item) => item.name === formik.values.dept)?.role;
+      if (role && role !== formik.values.role) {
+        setuserselected(role);
+        formik.setFieldValue('role', role); // Update the role in Formik form only if it's different
+      }
+    };
+
+    if (formik.values.dept) {
+      findRole();
+    }
+  }, [formik.values.dept, datas]); // Add formik.values.role to prevent unnecessary updates
 
   return (
     <form onSubmit={formik.handleSubmit}>

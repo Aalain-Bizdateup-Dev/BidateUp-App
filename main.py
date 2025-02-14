@@ -7,7 +7,7 @@ import pandas as pd
 import io
 from sqlalchemy.exc import SQLAlchemyError
 # Database Configuration
-DATABASE_URL = "postgresql://postgres:admin@localhost/proper_app"
+DATABASE_URL = "postgresql://postgres:Admin@localhost/proper_app"
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
