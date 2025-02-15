@@ -46,15 +46,7 @@ export default function NavContent({ navigation, activeNav }) {
       <ListGroup variant="flush" as="ul" bsPrefix=" " className="pc-navbar">
         {navItems}
       </ListGroup>
-      <Card className="nav-action-card m-3">
-        <Card.Body>
-          <h5 className="text-white">Upgrade To Pro</h5>
-          <p className="text-white text-opacity-75">To get more features and components</p>
-          <a href="https://codedthemes.com/item/dashboardkit-react-admin-template/" target="_blank" className="btn btn-primary">
-            Buy Now
-          </a>
-        </Card.Body>
-      </Card>
+      
     </SimpleBar>
   );
 
@@ -69,7 +61,7 @@ export default function NavContent({ navigation, activeNav }) {
   const mHeader = (
     <div className="m-header">
       <Link to="/dashboard/sales" className="b-brand">
-        <img src={logo} alt="" className="logo logo-lg" />
+        <img src={logo} alt="" className="logo logo-lg w-100 " />
       </Link>
     </div>
   );
