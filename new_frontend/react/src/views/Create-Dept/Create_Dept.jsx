@@ -13,26 +13,23 @@ const Create_Dept = () => {
   const [departments, setdepartments] = useState([]);
   const [loading, setloading] = useState(false);
   var getAllDept = async () => {
-    if (departments.length ===0){
-      setloading(true)
+    if (departments.length === 0) {
+      setloading(true);
       const data = await fetchAllDepartments();
-    console.log(data);
-    setdepartments(data.data.data);
-    }
-    else return
+      console.log(data);
+      setdepartments(data.data.data);
+    } else return;
   };
   useEffect(() => {
     getAllDept();
-  },[]);
+  }, []);
 
-
-  
-  const handleSubmit = async (values, {resetForm}) => {
+  const handleSubmit = async (values, { resetForm }) => {
     const data = await create_Dept(values);
 
     const response_number = data.data.status_code;
     const message = data.data.message;
-    getAllDept()
+    getAllDept();
     if (response_number === 200) {
       toast.success(message, {
         position: 'top-right'
@@ -42,7 +39,7 @@ const Create_Dept = () => {
         position: 'top-right'
       });
     }
-    resetForm()
+    resetForm();
   };
   const validate = (values) => {
     const errors = {};
@@ -82,29 +79,30 @@ const Create_Dept = () => {
         </Form>
       </Formik>
       <h3 className="mt-4">Departments</h3>
-     
-     {
-      loading ? ( <Row>
-        {
-          departments?.map((dept) => {
-           return(
-             <Col sm={6} className="" key = {dept.id}>
-          <ProductCard
-            params={{
-              title: dept.name,
-              primaryText: dept.role,  // Assuming dept.name is the text you want to display
-              icon_color: 'text-gray',
-              bg_card_color: 'bg-pink-300 ',
-              text_color: 'text-gray',
-              type:"true"
-            }}
-          />
-        </Col>
-           )
-          })
-        }
-      </Row>):(<p>Loading</p>)
-     }
+
+      {loading ? (
+        <Row>
+          {departments?.map((dept) => {
+            return (
+              <Col sm={6} className="" key={dept.id}>
+                <ProductCard
+                  params={{
+                    title: dept.name,
+                    primaryText: dept.role, // Assuming dept.name is the text you want to display
+                    icon_color: 'text-gray',
+                    bg_card_color: 'bg-pink-300 ',
+                    text_color: 'text-gray',
+                    type: 'true',
+                    number: true
+                  }}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      ) : (
+        <p>Loading</p>
+      )}
       <ToastContainer />
     </div>
   );
