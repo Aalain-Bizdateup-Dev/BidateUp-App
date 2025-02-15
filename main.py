@@ -35,8 +35,8 @@ class Department(Base):
     name = Column(String, unique=True, index=True)
     role = Column(String, unique=True, index=True)
     employees = relationship("Employee", back_populates="department")
-    # questions = relationship("Question", back_populates="department")
-    # employee_kpi = relationship("Question", back_populates="department")
+    questions = relationship("Question", back_populates="department")
+    employee_kpi = relationship("Question", back_populates="department")
 class Employee(Base):
     __tablename__ = "employees"
     id = Column(Integer, primary_key=True, index=True)
@@ -59,7 +59,6 @@ class Question(Base):
     department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
     employee_id = Column(Integer, ForeignKey("employees.id"), nullable=False)
     department = relationship("Department", back_populates="employee_kpi")
-    question_var =relationship("Employee", back_populates="employee_var")
 # Create Tables on Startup
 # @app.on_event("startup")
 # def startup():
@@ -169,24 +168,28 @@ async def upload_csv(files: List[UploadFile] = File(...), db: Session = Depends(
             contents = await file.read()
             df = pd.read_csv(io.StringIO(contents.decode("utf-8")))
 
-            # Ensure correct CSV format
-            if "question" not in df.columns or "month" not in df.columns or "answer" not in df.columns or "department" not in df.columns or "emp" not in df.columns:
-                raise HTTPException(status_code=400, detail="CSV must contain 'question', 'answer', 'department', 'month', and 'emp' columns")
+
+            required_columns = ["question", "answer", "month", "department", "emp"]
+            for col in required_columns:
+                if col not in df.columns:
+                    raise HTTPException(status_code=400, detail=f"CSV must contain '{col}' column")
+
+            # Process each row in the CSV file
             for _, row in df.iterrows():
                 # Find employee by name
                 employee_name = db.query(Employee).filter(Employee.name == row['emp']).first()
                 if not employee_name:
-                    raise HTTPException(status_code=404, detail=f"Employee {row['emp']} not found")
+                    raise HTTPException(status_code=404, detail=f"Employee '{row['emp']}' not found")
                 
-                # Find department or create it if it doesn't exist
+                # Find department by name, or create it if it doesn't exist
                 dept = db.query(Department).filter(Department.name == row["department"]).first()
                 if not dept:
                     dept = Department(name=row["department"])
                     db.add(dept)
-                    db.commit()
-                    db.refresh(dept)
+                    db.commit()  # Commit to get the ID of the new department
+                    db.refresh(dept)  # Refresh to get the latest data
 
-                # Create and add the QA entry to the DB
+                # Create a Question entry
                 qa_entry = Question(
                     questions=row["question"],
                     answers=row["answer"],
@@ -199,10 +202,10 @@ async def upload_csv(files: List[UploadFile] = File(...), db: Session = Depends(
             # Commit after processing all rows in a file
             db.commit()
 
-        return {"message": f"{len(files)} CSV files uploaded and questions stored successfully."}
+        return {"message": f"{len(files)} CSV file(s) uploaded and questions stored successfully."}
 
     except Exception as e:
-        db.rollback()
+        db.rollback()  # Rollback in case of any error
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
 
