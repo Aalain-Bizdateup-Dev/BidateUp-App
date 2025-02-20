@@ -117,3 +117,55 @@ font-weight: 600;
 .card-dashboard-dept-text{
     font-size: 20px;
 }
+.nav-tabs{
+    border-bottom: 0px!important;
+}
+.nav-link{
+    width: 150px!important;
+    color: rgb(0, 0, 0)000;
+}
+.nav-link.active{
+    color: #fff!important;
+    background-color:#733AEA!important;
+}
+.nav-link{
+    background-color: #fff!important;
+    color: #000000!important;
+    font-size: 16px!important;
+    font-weight: 500!important;
+    border-radius: 10px!important;
+
+}
+.nav-fill .nav-item{
+    flex: 0!important;
+
+}
+.nav-fill{
+    gap: 20px;
+}
+.border-radius-card{
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.custom-image-icon{
+    width: 40px;
+}
+.card-txt{
+    font-size: 25px;
+}
+.card-on-hover:hover{
+    transition: 0.5s linear;
+}
+.card-on-hover:hover{
+    scale: 1.01;
+    transition: 0.5s linear;
+    cursor: pointer;
+
+}
+
+.card-icon{
+    font-size: 25px;
+}
+.gap-10{
+    gap: 10px;
+}
