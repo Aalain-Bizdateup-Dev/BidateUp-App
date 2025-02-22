@@ -32,6 +32,22 @@ const menuItems = {
       icon: 'icon-ui',
       children: [
         {
+          id: 'dept',
+          title: 'Create Departments',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'color_lens',
+          url: '/create-depts'
+        },
+        {
+          id: 'departments',
+          title: 'Departments',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'text_fields',
+          url: '/departments'
+        },
+        {
           id: 'dashboard_main',
           title: 'Dashboard_main',
           type: 'item',
@@ -39,15 +55,6 @@ const menuItems = {
           iconname: 'text_fields',
           url: '/dashboard_main'
         },
-        {
-          id: 'typography',
-          title: 'Typography',
-          type: 'item',
-          icon: 'material-icons-two-tone',
-          iconname: 'text_fields',
-          url: '/typography'
-        },
-     
         {
           id: 'employee',
           title: 'Employees',
@@ -64,30 +71,10 @@ const menuItems = {
           iconname: 'text_fields',
           url: '/add-employee'
         },
-        {
-          id: 'color',
-          title: 'Color',
-          type: 'item',
-          icon: 'material-icons-two-tone',
-          iconname: 'color_lens',
-          url: '/color'
-        },
-        {
-          id: 'color',
-          title: 'Profile',
-          type: 'item',
-          icon: 'material-icons-two-tone',
-          iconname: 'color_lens',
-          url: '/profile'
-        },
-        {
-          id: 'dept',
-          title: 'Create Departments',
-          type: 'item',
-          icon: 'material-icons-two-tone',
-          iconname: 'color_lens',
-          url: '/create-dept'
-        },
+
+       
+        
+       
         {
           id: 'icons',
           title: 'Icons',

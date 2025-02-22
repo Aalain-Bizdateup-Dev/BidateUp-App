@@ -2,11 +2,11 @@ import { lazy } from 'react';
 
 import AdminLayout from 'layouts/AdminLayout';
 import GuestLayout from 'layouts/GuestLayout';
-import Add__Employee from '../views/Add_Employee/Add__Employee';
 import Create_Dept from '../views/Create-Dept/Create_Dept.jsx';
 import Main_Dashboard from "../views/Main-Dashboard/dashboard.jsx"
 import Second_User from '../views/Main-Dashboard/second-user.jsx';
 import Create_Department from '../views/Create Departments/Create_Department.jsx';
+import Departments from '../views/Departments/Departments.jsx';
 const DashboardSales = lazy(() => import('../views/dashboard/DashSales/index'));
 
 const Typography = lazy(() => import('../views/ui-elements/basic/BasicTypography'));
@@ -23,7 +23,6 @@ const Sample = lazy(() => import('../views/sample'));
 
 const Profile = lazy(() => import('../views/profile/profile'));
 const Employee = lazy(() => import('../views/Employee/Employee'));
-const AddEmployee = (() => import('../views/Add_Employee/Add__Employee'));
 const MainRoutes = {
   path: '/',
   children: [
@@ -31,13 +30,22 @@ const MainRoutes = {
       path: '/',
       element: <AdminLayout />,
       children: [
+        // {
+        //   path: '/create-depts',
+        //   element: <Create_Dept />
+        // },
         {
           path: '/dashboard/sales',
           element: <DashboardSales />
         },
+        
           {
-            path: '/create-dept',
+            path: '/create-depts',
             element: <Create_Department />
+          },
+          {
+            path: '/departments',
+            element: <Departments />
           },
         {
           path: '/typography',
@@ -60,19 +68,10 @@ const MainRoutes = {
           path: '/employee',
           element: <Employee />
         },
-        {
-          path: '/add-employee',
-          element: <Add__Employee />
-        },
-        {
-          path: '/create-dept',
-          element: <Create_Dept />
-        },
+ 
         
-        {
-          path: '/color',
-          element: <Color />
-        },
+        
+       
         {
           path: '/icons/Feather',
           element: <FeatherIcon />

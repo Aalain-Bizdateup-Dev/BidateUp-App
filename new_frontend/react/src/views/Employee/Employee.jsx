@@ -5,7 +5,6 @@ import "../../../src/index.css"
 import { ToastContainer, toast } from 'react-toastify';
 import { Modal, Tab } from 'bootstrap/dist/js/bootstrap.bundle.min';
 import EmployeeModal from './modal';
-import { Employee_Context } from '../Add_Employee/employee_context';
 import "../../../src/index.css"
 import New_Employee_Card from './employee-new-card';
 const Employee = () => {

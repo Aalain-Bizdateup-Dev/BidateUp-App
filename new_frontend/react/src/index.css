@@ -209,3 +209,22 @@ border-radius: 5px;
 .border-radius-create-dept{
     border-radius: 10px;
 }
+.total-dept-card-txt{
+    font-size: 25px;
+}
+.bg-blue{
+    background-color: #295F98;
+}
+.card-border{
+    border-radius: 15px;
+}
+.total-dept-card-box-shadow{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.total-dept-card-width{
+    width: 15%!important;
+}
+
+.total-dept-card-margin-top{
+    margin-top: 20px!important;
+}

@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import ProductCard from '../../components/Widgets/Statistic/ProductCard'
 import "../../../src/index.css"
-import { Employee_Context } from '../Add_Employee/employee_context'
 const Profile = () => {
   const {allemployees, departmets} = useContext(Employee_Context)
 

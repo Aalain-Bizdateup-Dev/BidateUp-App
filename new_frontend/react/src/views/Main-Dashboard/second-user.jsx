@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import Dashboard_cards from './dasboard-cards'
 import Employee_Cards from './employee-cards'
-import { Employee_Context } from '../Add_Employee/employee_context'
 
 const Second_User = () => {
   const {employees, loading} = useContext(Employee_Context)

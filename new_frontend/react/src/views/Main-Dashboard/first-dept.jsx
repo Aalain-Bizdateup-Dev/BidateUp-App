@@ -4,7 +4,6 @@ import "../../../src/index.css"
 import Second_User from './second-user'
 import { useEffect, useState } from 'react'
 import { fetchAllDepartments } from '../../Api'
-import { Employee_Context } from '../Add_Employee/employee_context'
 import { useNavigate } from 'react-router-dom'
 const First_Dept = () => {
 const {departmets,employees, fetchallemp} = useContext(Employee_Context)
