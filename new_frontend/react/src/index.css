@@ -169,3 +169,43 @@ font-weight: 600;
 .gap-10{
     gap: 10px;
 }
+.pc-container {
+    background-color: #F9FAFC;
+}
+.padding-create-dept{
+    padding: 20px 20px;
+}
+.create-dept-text{
+    font-size: 20px;
+    font-weight:500;
+}
+
+.input{
+    background-color: #F3F3F3;
+    border: none;
+    outline: none;
+padding: 10px 15px;
+border-radius: 5px;
+}
+.primary-btn{
+    background-color: #242552   ;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.5s linear;
+
+}
+.primary-btn:hover{
+    background-color: #5C2DAB;
+    transition: 0.5s linear;
+}
+.box-shadow-create-dept{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.border-radius-create-dept{
+    border-radius: 10px;
+}
