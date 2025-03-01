@@ -66,3 +66,10 @@ export const get_departments = async () => {
     const response = await axios.get(endpoints.get_dept);
     return response
 }
+export const add_employee = async (data) => {
+    const response = await axios.post(endpoints.add_employee, data);
+    if( response.status === 200){
+        return response.data
+    }
+    return response.data
+}

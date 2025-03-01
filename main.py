@@ -96,7 +96,7 @@ def add_employee(employee: CreateEmployee, db: Session = Depends(get_db)):
     # Check if employee already exists
     db_employee = db.query(Employees).filter(Employees.employee_id == employee.employee_id).first()
     if db_employee:
-        raise HTTPException(detail="Employee Already Exists", status_code=409)
+        raise HTTPException(detail="Employee Already Exists", status_code=400)
 
     # Convert department_name (string) to department_id (integer)
     db_dept = db.query(Departments).filter(Departments.name ==  employee.department_name).first()
@@ -118,7 +118,7 @@ def add_employee(employee: CreateEmployee, db: Session = Depends(get_db)):
         db.add(db_employee)
         db.commit()
         db.refresh(db_employee)
-        return db_employee
+        return {"message": "Employee Added Successfully", "status_code": 200}
 
     except SQLAlchemyError as e:
         db.rollback()

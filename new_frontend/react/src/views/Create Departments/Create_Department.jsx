@@ -13,7 +13,7 @@ const Create_Department = () => {
       
       if (response.status_code === 200) {
         toast.success(response.message);  
-        resetForm(); // Clear the form on success
+        resetForm(); 
       }
       if (response.status_code === 400) {
         toast.error(response.message);  

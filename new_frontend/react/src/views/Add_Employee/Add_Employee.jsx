@@ -1,8 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../src/index.css';
 import { Formik, Form, Field } from 'formik';
-
+import { add_employee, get_departments } from '../../Api';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Add_Employee = () => {
+  const [departments, setDepartments] = useState([]);
+
+  useEffect(() => {
+    const getDeptData = async () => {
+      const response = await get_departments();
+      console.log(response.data);
+      setDepartments(response.data);
+    };
+    getDeptData();
+  }, []);
+
+ const addempToDb = async (data, resetForm) => {
+    try {
+      const response = await add_employee(data);
+      console.log(response.message);
+      
+      if (response.status_code === 200) {
+        toast.success(response.message);  
+        resetForm(); 
+      }
+      if (response.status_code === 400) {
+        toast.error(response.message);  
+      }
+    } catch (error) {
+    }
+  };
   const validate = (values) => {
     let errors = {};
 
@@ -17,8 +45,8 @@ const Add_Employee = () => {
     } else if (!/\S+@\S+\.\S+/.test(values.email)) {
       errors.email = 'Please Enter Email';
     }
-    if (!values.department) {
-      errors.department = 'Please Select Department';
+    if (!values.department_name) {
+      errors.department_name = 'Please Select Department';
     }
     if (!values.designation) {
       errors.designation = 'Please Enter Designation';
@@ -33,6 +61,7 @@ const Add_Employee = () => {
   };
 
   return (
+ <>
     <div className="row">
       <div className="col-12 bg-white p-4 add-employee-box-shadow add-employee-border-radius">
         <h2>Add Employee Details</h2>
@@ -41,14 +70,20 @@ const Add_Employee = () => {
             employee_type: '',
             employee_id: '',
             email: '',
-            department: '',
+            department_name: '',
             designation: '',
-            phone_number: '',
-            name: ''
+            phone_number: "",
+            name: '',
+            employee_status: true
           }}
           validate={validate}
           onSubmit={async (values) => {
-            console.log(values);
+            const formattedValues = {
+              ...values,
+              phone_number: String(values.phone_number), 
+            };
+            addempToDb(formattedValues)
+          
           }}
         >
           {({ errors, touched }) => (
@@ -59,8 +94,11 @@ const Add_Employee = () => {
                     Employee Type <span className="text-red">*</span>
                   </label>
                   <Field as="select" name="employee_type" id="employee_type" className="add-employee-input">
-                    <option value="red">Employee</option>
-                    <option value="red">Consultant</option>
+                    <option value="" disabled>
+                      Select Department
+                    </option>
+                    <option value="Employee">Employee</option>
+                    <option value="Consultant">Consultant</option>
                   </Field>
                   {errors.employee_type && touched.employee_type && (
                     <div className="error-text text-red fw-bold">{errors.employee_type}</div>
@@ -88,11 +126,17 @@ const Add_Employee = () => {
                   <label htmlFor="department" className="add-employee-label">
                     Select Department <span className="text-red">*</span>
                   </label>
-                  <Field as="select" name="department" id="department" className="add-employee-input">
-                    <option value="red">Employee</option>
-                    <option value="red">Consultant</option>
+                  <Field as="select" name="department_name" id="department_name" className="add-employee-input">
+                    <option value="" disabled>Select Department</option> {/* Default placeholder */}
+                    {departments?.map((department, index) => (
+                      <option key={index} value={department.name}>
+                        {department.name}
+                      </option>
+                    ))}
                   </Field>
-                  {errors.department && touched.department && <div className="error-text text-red fw-bold">{errors.department}</div>}
+                  {errors.department_name && touched.department_name && (
+                    <div className="error-text text-red fw-bold">{errors.department_name}</div>
+                  )}
                 </div>
               </div>
               <div className="row mt-4">
@@ -135,6 +179,10 @@ const Add_Employee = () => {
         </Formik>
       </div>
     </div>
+          <ToastContainer />
+ 
+ </>
+    
   );
 };
 

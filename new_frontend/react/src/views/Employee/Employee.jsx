@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ProductTable from '../../components/Widgets/ProductTable'
 import productData from 'data/productTableData';
 import "../../../src/index.css"
@@ -7,9 +7,24 @@ import { Modal, Tab } from 'bootstrap/dist/js/bootstrap.bundle.min';
 import EmployeeModal from './modal';
 import "../../../src/index.css"
 import New_Employee_Card from './employee-new-card';
+import { get_departments } from '../../Api';
 const Employee = () => {
-  const {allemployees, getModalEmployee, modalemployee, updateSpecificEmployee} = useContext(Employee_Context);
+  const [departments, setDepartments] = useState([]);
+useEffect(() => {
+  const getDeptData = async() =>{
+    const response = await get_departments()
+  }
+  const updatedData = departments.map((item) => {
+    return {
+      ...item,
+      tab: item.name
+    }
+  })
 
+  setDepartments(updatedData)
+  getDeptData()
+}, [])
+console.log("This Is Employees" + departments);
 const [tabs, settabs] = useState([{
   name:"All",
   tab:0
