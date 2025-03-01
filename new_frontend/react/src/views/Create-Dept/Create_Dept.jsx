@@ -4,7 +4,7 @@ import '../../../src/index.css';
 import { Col, Row } from 'react-bootstrap';
 import ProductCard from '../../components/Widgets/Statistic/ProductCard';
 import { ToastContainer, toast } from 'react-toastify';
-import { create_Dept, fetchAllDepartments } from '../../Api';
+// import { create_Dept, fetchAllDepartments } from '../../Api';
 const Create_Dept = () => {
   const initialValues = {
     name: '',
