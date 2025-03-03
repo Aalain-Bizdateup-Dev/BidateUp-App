@@ -8,6 +8,7 @@ import Second_User from '../views/Main-Dashboard/second-user.jsx';
 import Create_Department from '../views/Create Departments/Create_Department.jsx';
 import Departments from '../views/Departments/Departments.jsx';
 import Add_Employee from '../views/Add_Employee/Add_Employee.jsx';
+import Select_Employee from '../dasboard-main-components/select-employee/Select_Employee.jsx';
 const DashboardSales = lazy(() => import('../views/dashboard/DashSales/index'));
 
 const Typography = lazy(() => import('../views/ui-elements/basic/BasicTypography'));
@@ -55,6 +56,10 @@ const MainRoutes = {
         {
           path: '/dashboard_main',
           element: <Main_Dashboard />
+        },
+        {
+          path: '/employee/:id',
+          element: <Select_Employee />
         },
         {
           path: '/second-step',

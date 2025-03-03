@@ -73,3 +73,12 @@ export const add_employee = async (data) => {
     }
     return response.data
 }
+export const get_employee = async (name) => {
+  try {
+    const response = await axios.get(`${endpoints.get_employee}/${name}`);
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching employees:", error);
+    throw error; 
+  }
+};

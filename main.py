@@ -128,8 +128,25 @@ def add_employee(employee: CreateEmployee, db: Session = Depends(get_db)):
         raise HTTPException(detail="Something Went Wrong", status_code=500) from e
     
 
-@app.get("/dept/{dept_name}")
+# @app.get("/get-employee/{dept_name}")
+# def get_employee_by_dept(dept_name: str, db: Session = Depends(get_db)):
+#     db_check =  db.query(Departments).filter(Departments.name == dept_name).first()
+#     db_employee = db.query(Employees).filter(Employees.department_name == db_check.id).all()
+#     return db_employee
+
+
+
+class EmployeeOut(BaseModel):
+    name: str
+
+@app.get("/get-employee/{dept_name}", response_model=List[EmployeeOut])
 def get_employee_by_dept(dept_name: str, db: Session = Depends(get_db)):
-    db_check =  db.query(Departments).filter(Departments.name == dept_name).first()
+    
+    db_check = db.query(Departments).filter(Departments.name == dept_name).first()
+
+    if not db_check:
+        raise HTTPException(status_code=404, detail="Department not found")
     db_employee = db.query(Employees).filter(Employees.department_name == db_check.id).all()
+    if not db_employee:
+        raise HTTPException(status_code=404, detail="No employees found in this department")
     return db_employee

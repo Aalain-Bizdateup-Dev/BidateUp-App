@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { get_departments } from '../../Api'
 import { FaSearch } from "react-icons/fa";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Select_Dept = () => {
   const [data, setData] = useState([]); 
   const [searchItem, setSearchItem] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
     setSearchItem(searchTerm);
@@ -21,8 +23,10 @@ const Select_Dept = () => {
       setFilteredUsers(filteredItems);
     }
   }
+const onClickChange = ()=>{
+    
+}
 
-  // Fetch departments from the API
   const getDepartments = async () => {
     const response = await get_departments();
     setData(response.data);
@@ -52,7 +56,12 @@ const Select_Dept = () => {
           filteredUsers.map((item) => (
             <div key={item.id} className="col-xl-2 col-md-6 col-lg-6 blue-dept-card m-3">
               <h2 className="text-center text-white mb-0 text-for-card">{item.name}</h2>
-              <button className="w-100 mt-5 text-center border-none select-btn">Select</button>
+            <Link to={`/employee/${item.name}`}>
+            <button className="w-100 mt-5 text-center border-none select-btn"
+            
+              
+            >Select</button>
+            </Link>
             </div>
           ))
         ) : (
