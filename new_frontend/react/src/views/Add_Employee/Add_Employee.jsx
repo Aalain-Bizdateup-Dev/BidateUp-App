@@ -58,7 +58,7 @@ const Add_Employee = () => {
       errors.name = 'Please Enter  Name';
     }
     return errors;
-  };
+  };  
 
   return (
  <>
@@ -74,16 +74,16 @@ const Add_Employee = () => {
             designation: '',
             phone_number: "",
             name: '',
-            employee_status: true
+            employee_status: true 
           }}
           validate={validate}
-          onSubmit={async (values) => {
+          onSubmit={async (values,{resetForm}) => {
             const formattedValues = {
               ...values,
               phone_number: String(values.phone_number), 
             };
             addempToDb(formattedValues)
-          
+            resetForm()
           }}
         >
           {({ errors, touched }) => (

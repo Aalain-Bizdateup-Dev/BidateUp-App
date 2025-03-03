@@ -1,107 +1,62 @@
-import React, { useContext, useEffect, useState } from 'react'
-import ProductTable from '../../components/Widgets/ProductTable'
-import productData from 'data/productTableData';
-import "../../../src/index.css"
-import { ToastContainer, toast } from 'react-toastify';
-import { Modal, Tab } from 'bootstrap/dist/js/bootstrap.bundle.min';
-import EmployeeModal from './modal';
-import "../../../src/index.css"
+import React, { useEffect, useState } from 'react';
 import New_Employee_Card from './employee-new-card';
 import { get_departments } from '../../Api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Employee = () => {
   const [departments, setDepartments] = useState([]);
-useEffect(() => {
-  const getDeptData = async() =>{
-    const response = await get_departments()
-  }
-  const updatedData = departments.map((item) => {
-    return {
-      ...item,
-      tab: item.name
-    }
-  })
+  const [activeTab, setActiveTab] = useState(0); 
 
-  setDepartments(updatedData)
-  getDeptData()
-}, [])
-console.log("This Is Employees" + departments);
-const [tabs, settabs] = useState([{
-  name:"All",
-  tab:0
-},
-{
-  name:"Tech", tab:1
-},
-{
-  name:"Investor Relation",tab:2
-},
-{
-  name:"Finance",tab:3
-},
-{
-  name:"HR",tab:4
-}
-]);
+  useEffect(() => {
+    const getDeptData = async () => {
+      try {
+        const response = await get_departments();
+        if (response.data) {
+          const updatedData = response.data.map((item, index) => ({
+            ...item,
+            tab: item.id, 
+          }));
+          setDepartments(updatedData);
+        }
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+      }
+    };
 
-const handleDelete = (id) => {
- if(( confirm("Are You Sure You Want To Delete This Employee"))){
-  toast.success("Employee Deleted Successfully!");
- }
- else{
-  toast.error("Employee Not Deleted!");
- }
-};
-
-
+    getDeptData();
+  }, []);
   return (
     <>
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar pauseOnHover />
+      <h3>BizDateUp Employees</h3>
 
-
-
-      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={true} pauseOnHover={true} />
-
-  <h3>BizDateUp  Employees </h3>
-  <ul class="nav nav-fill nav-tabs mt-3" role="tablist">
-  {
-  tabs.map((item, index) => {
-    return (
-      <li className="nav-item custom-width-tab" role="presentation" key={item.tab}>
-        <a 
-          className={`nav-link ${index === 0 ? "active" : ""}`} // Ensure the first tab has the "active" class
-          id={`fill-tab-${item.tab}`} 
-          data-bs-toggle="tab" 
-          href={`#fill-tabpanel-${item.tab}`} 
-          role="tab" 
-          aria-controls={`fill-tabpanel-${item.tab}`} 
-          aria-selected={index === 0 ? "true" : "false"} // Mark the first tab as selected
-        >
-          {item.name}
-        </a>
-      </li>
-    );
-  })
-}
-
-  {/* <li class="nav-item custom-width-tab" role="presentation">
-    <a class="nav-link active" id="fill-tab-0" data-bs-toggle="tab" href="#fill-tabpanel-0" role="tab" aria-controls="fill-tabpanel-0" aria-selected="true"> Tab 1 </a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="fill-tab-1" data-bs-toggle="tab" href="#fill-tabpanel-1" role="tab" aria-controls="fill-tabpanel-1" aria-selected="false"> Tab 2 </a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="fill-tab-2" data-bs-toggle="tab" href="#fill-tabpanel-2" role="tab" aria-controls="fill-tabpanel-2" aria-selected="false"> Tab 3 </a>
-  </li> */}
-
-</ul>
-<New_Employee_Card/>
-<div class="tab-content pt-5" id="tab-content">
-  <div class="tab-pane active" id="fill-tabpanel-0" role="tabpanel" aria-labelledby="fill-tab-0">Tab 1 selected</div>
-  <div class="tab-pane" id="fill-tabpanel-1" role="tabpanel" aria-labelledby="fill-tab-1">Tab Tab 2 selected</div>
-  <div class="tab-pane" id="fill-tabpanel-2" role="tabpanel" aria-labelledby="fill-tab-2">Tab Tab 3 selected</div>
-</div>
-    
+      {/* Tabs Navigation */}
+      <ul className="nav nav-fill nav-tabs mt-3" role="tablist">
+        {departments.map((item, index) => (
+          <li className="nav-item custom-width-tab" role="presentation" key={item.tab}>
+            <button
+              className={`nav-link ${activeTab === index ? 'active' : ''}`}
+              onClick={() => setActiveTab(index)}
+            >
+              {item.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="tab-content pt-5">
+        {departments.map((item, index) => (
+          <div
+            key={item.tab}
+            className={`tab-pane fade ${activeTab === index ? 'show active' : ''}`}
+          >
+            <New_Employee_Card department={item.name} />
+            <p>Department ID: {item.tab}</p>
+          </div>
+        ))}
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Employee
+export default Employee;

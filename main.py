@@ -126,4 +126,10 @@ def add_employee(employee: CreateEmployee, db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(detail="Something Went Wrong", status_code=500) from e
+    
 
+@app.get("/dept/{dept_name}")
+def get_employee_by_dept(dept_name: str, db: Session = Depends(get_db)):
+    db_check =  db.query(Departments).filter(Departments.name == dept_name).first()
+    db_employee = db.query(Employees).filter(Employees.department_name == db_check.id).all()
+    return db_employee

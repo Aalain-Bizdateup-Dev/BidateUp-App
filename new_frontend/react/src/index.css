@@ -275,3 +275,51 @@ font-size: 18px;
     font-size: 16px;
     margin-top: 5px;
 }
+.blue-dept-card{
+    background-color: #00D2FF
+;
+border-radius: 10px;
+padding: 15px 20px;
+height: 190px;
+}
+.text-for-card{
+    font-weight: 500;
+font-size: 30px;
+}
+
+.select-btn{
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 0.5s linear;
+    background-color: #fff;
+    font-weight: 600;
+}
+
+
+.select-btn:hover{
+    background-color: #010202;
+color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+.search-float{
+    top: 92px;
+    font-size: 20px;
+    left: 45px;
+
+}
+.select-dept-input{
+    padding: 10px 50px;
+    width: 300px;
+    border-radius: 10px;
+}
