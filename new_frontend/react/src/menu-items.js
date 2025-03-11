@@ -56,6 +56,22 @@ const menuItems = {
           url: '/dashboard_main'
         },
         {
+          id: 'upload_kpi',
+          title: 'Upload KPI',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'text_fields',
+          url: '/upload-kpi'
+        },
+        {
+          id: 'enter_kpi',
+          title: 'Enter KPI',
+          type: 'item',
+          icon: 'material-icons-two-tone',
+          iconname: 'text_fields',
+          url: '/enter-kpi'
+        },
+        {
           id: 'employee',
           title: 'Employees',
           type: 'item',

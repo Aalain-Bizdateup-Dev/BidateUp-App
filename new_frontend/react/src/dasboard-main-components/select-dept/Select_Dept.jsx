@@ -23,9 +23,6 @@ const Select_Dept = () => {
       setFilteredUsers(filteredItems);
     }
   }
-const onClickChange = ()=>{
-    
-}
 
   const getDepartments = async () => {
     const response = await get_departments();

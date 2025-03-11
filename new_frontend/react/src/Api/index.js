@@ -82,3 +82,8 @@ export const get_employee = async (name) => {
     throw error; 
   }
 };
+export const addQuestion = async(question)=>{
+    const data = await axios.post(endpoints.upload_kpi_questions, question)
+    const response =  data
+     return response
+}

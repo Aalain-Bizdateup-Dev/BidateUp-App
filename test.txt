@@ -8,4 +8,21 @@ from database import get_db  # Function to get database session
 
 app = FastAPI()
 
+CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,  
+    employee VARCHAR(255),
+    month VARCHAR(50),     
+    year VARCHAR(4),      
+    question TEXT,        
+    answer_type VARCHAR(50) 
+);
+
+CREATE TABLE answers (
+    id SERIAL PRIMARY KEY,    
+    question_id INT REFERENCES questions(id) ON DELETE CASCADE,         
+    employee VARCHAR(255),
+    month VARCHAR(50),
+    year VARCHAR(4),
+    answer TEXT
+);
 

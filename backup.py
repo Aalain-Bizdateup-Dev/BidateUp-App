@@ -112,8 +112,6 @@ def add_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
             department_id=dept.id,
             department_name = employee.department_name
         )
-
-
         db.add(emp)
         db.commit()
         db.refresh(emp)
@@ -277,7 +275,7 @@ def get_specific_emp(emp_id: int, db: Session = Depends(get_db)):
         raise HTTPException (message="No Data Found", status_code = 404)
 
 @app.get("/get_data_from_sheet/{name}")
-def get_data(name: str, db: Session = Depends(get_db)):
+async def get_data(name: str, db: Session = Depends(get_db)):
     try:
         # Join Employee and Question tables based on employee_id
         data = db.query(Question).join(Employee).filter(Employee.name == name).all()
