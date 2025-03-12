@@ -9,7 +9,7 @@ import csv
 import logging
 from io import StringIO
 # Database Configuration
-DATABASE_URL = "postgresql://postgres:Admin@localhost/ProperDb"
+DATABASE_URL = "postgresql://postgres:ZGsTxcKAgGlcrgjpyJhedlnhJcVMTFfZ@shinkansen.proxy.rlwy.net:22821/railway"
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -54,7 +54,7 @@ class Employees(Base):
     name = Column(String(255), nullable=False)
     employee_type = Column(String(255), nullable=False)
     employee_status = Column(Boolean, default=True, nullable=False)
-
+    
 class Question(Base):
     __tablename__ = "questions"
 
@@ -185,8 +185,8 @@ class UploadRequest(BaseModel):
 
 @app.post("/upload-questions/", response_model=UploadRequest)
 async def upload_questions(
-    data: UploadRequest = Body(...),  # Accept JSON Data
-    file: UploadFile = File(...),  # Accept File Upload
+    data: UploadRequest = Body(...), 
+    file: UploadFile = File(...),  
     db: Session = Depends(get_db)
 ):
     employee = data.employee

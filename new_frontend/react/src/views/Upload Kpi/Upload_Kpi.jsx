@@ -56,7 +56,6 @@ const Upload_Kpi = () => {
     validate,
     onSubmit: async (values) => {
       setdata((item)=>[{...values, "file":selectedFile}])
-      console.log(data);
       try {
         const response = await fetch("http://127.0.0.1:8000/upload-questions", {
           method: "POST",
@@ -140,7 +139,6 @@ const Upload_Kpi = () => {
             onChange={(event) => {
         
   const file = event.currentTarget.files[0];
-  console.log(file);
   
   setSelectedFile(file);
   formik.setFieldValue("file", file);
